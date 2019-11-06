@@ -1,6 +1,8 @@
 package main;
 
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import main.model.DogModel;
@@ -43,9 +45,11 @@ public class LayoutWithDetailedInformationController {
     private void initialize(){
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
 
-        showDogDetails(null);
+       // showDogDetails(null);
 
         dogsCollection.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showDogDetails(newValue));
+
+
     }
 
     public void setMain(Main main){
@@ -61,24 +65,77 @@ public class LayoutWithDetailedInformationController {
             breedLabel.setText(dogModel.getBreed());
             coatLabel.setText(dogModel.getCoat());
             birthdayLabel.setText(dogModel.getBirthday());
-            textArea.setText(setText(dogModel));
         } else {
             sexLabel.setText("");
             breedLabel.setText("");
             coatLabel.setText("");
             textArea.setText("");
         }
+
+        vaccinationsCheckBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+
+                littersCheckBox.setSelected(false);
+                heatCheckBox.setSelected(false);
+                surgicalProceduresCheckBox.setSelected(false);
+
+                textArea.setText(setText(dogModel, "vaccinations"));
+            }
+        });
+
+        littersCheckBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+
+                vaccinationsCheckBox.setSelected(false);
+                heatCheckBox.setSelected(false);
+                surgicalProceduresCheckBox.setSelected(false);
+
+                textArea.setText(setText(dogModel, "litters"));
+            }
+        });
+
+        surgicalProceduresCheckBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                littersCheckBox.setSelected(false);
+                heatCheckBox.setSelected(false);
+                vaccinationsCheckBox.setSelected(false);
+
+                textArea.setText(setText(dogModel, "surgical"));
+            }
+        });
+
+        heatCheckBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                littersCheckBox.setSelected(false);
+                surgicalProceduresCheckBox.setSelected(false);
+                vaccinationsCheckBox.setSelected(false);
+
+                textArea.setText(setText(dogModel, "heat"));
+
+            }
+        });
     }
 
-    public String setText(DogModel dogModel){
+
+    public String setText(DogModel dogModel, String checkBoxLabel){
 
          String variableValue = "";
 
-        if(vaccinationsCheckBox.isSelected()){
-            variableValue = dogModel.getVaccinations();
-            System.out.println("Zaznaczono szczepienia");
-        } else {
-
+        if(checkBoxLabel.equals("vaccinations")){
+          variableValue = dogModel.getVaccinations();
+        }
+        if(checkBoxLabel.equals("litters")){
+            variableValue = dogModel.getLitters();
+        }
+        if (checkBoxLabel.equals("surgical")){
+            variableValue = dogModel.getSurgicalProcedures();
+        }
+        if(checkBoxLabel.equals("heat")){
+            variableValue = dogModel.getHeat();
         }
         return variableValue;
     }
