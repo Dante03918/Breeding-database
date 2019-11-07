@@ -87,15 +87,19 @@ public class Main extends Application {
             loader.setLocation(Main.class.getResource("layoutWithEditingOptions.fxml"));
             AnchorPane pane = (AnchorPane) loader.load();
 
+
             Stage editStage = new Stage();
             editStage.setTitle("Edycja");
             editStage.initModality(Modality.WINDOW_MODAL);
             editStage.initOwner(primaryStage);
+                Scene scene = new Scene(pane);
+                editStage.setScene(scene);
 
             LayoutWithEditingOptionsController controller = loader.getController();
             controller.setDialogStage(editStage);
             controller.setDogModel(dogModel);
 
+            editStage.showAndWait();
             return controller.isClickedOk();
         } catch (IOException e){
             e.printStackTrace();

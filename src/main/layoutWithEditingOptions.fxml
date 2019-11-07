@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.LayoutWithEditingOptions">
+<AnchorPane prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.LayoutWithEditingOptionsController">
    <children>
       <GridPane layoutX="211.0" layoutY="74.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
         <columnConstraints>
@@ -39,15 +39,15 @@
             <Label text="Mioty" GridPane.rowIndex="6" />
             <Label text="Zabiegi chirurgiczne" GridPane.rowIndex="7" />
             <Label text="Cieczki" GridPane.rowIndex="8" />
-            <TextField GridPane.columnIndex="1" />
-            <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-            <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="nameField" GridPane.columnIndex="1" />
+            <TextArea fx:id="heatArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <TextArea fx:id="surgicalArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <TextArea fx:id="littersArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <TextArea fx:id="vaccinationsArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="birthdayField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="coatField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="breedField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="sexField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
       <Label layoutX="286.0" layoutY="14.0" text="Dodawanie nowego psa">
@@ -55,7 +55,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Button layoutX="300.0" layoutY="411.0" mnemonicParsing="false" text="OK" />
-      <Button layoutX="538.0" layoutY="411.0" mnemonicParsing="false" text="Anuluj" />
+      <Button layoutX="300.0" layoutY="411.0" mnemonicParsing="false" onAction="#okHandle" text="OK" />
+      <Button layoutX="538.0" layoutY="411.0" mnemonicParsing="false" onAction="#cancelHandle" text="Anuluj" />
    </children>
 </AnchorPane>

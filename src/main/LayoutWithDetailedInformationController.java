@@ -137,4 +137,13 @@ public class LayoutWithDetailedInformationController {
         }
         return variableValue;
     }
+
+    @FXML
+    public void newButtonHandle(){
+        DogModel dogModel = new DogModel();
+        boolean clickedOk = main.showEditLayout(dogModel);
+        if(clickedOk){
+            main.getDogModelObservableList().add(dogModel);
+        }
+    }
 }
