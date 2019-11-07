@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.model.DogModel;
 
@@ -78,6 +79,28 @@ public class Main extends Application {
 
     public Stage getPrimaryStage() {
         return primaryStage;
+    }
+
+    public boolean showEditLayout(DogModel dogModel){
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("layoutWithEditingOptions.fxml"));
+            AnchorPane pane = (AnchorPane) loader.load();
+
+            Stage editStage = new Stage();
+            editStage.setTitle("Edycja");
+            editStage.initModality(Modality.WINDOW_MODAL);
+            editStage.initOwner(primaryStage);
+
+            LayoutWithEditingOptionsController controller = loader.getController();
+            controller.setDialogStage(editStage);
+            controller.setDogModel(dogModel);
+
+            return controller.isClickedOk();
+        } catch (IOException e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
 

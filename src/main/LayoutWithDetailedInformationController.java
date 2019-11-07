@@ -75,7 +75,6 @@ public class LayoutWithDetailedInformationController {
         vaccinationsCheckBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-
                 littersCheckBox.setSelected(false);
                 heatCheckBox.setSelected(false);
                 surgicalProceduresCheckBox.setSelected(false);
@@ -87,7 +86,6 @@ public class LayoutWithDetailedInformationController {
         littersCheckBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-
                 vaccinationsCheckBox.setSelected(false);
                 heatCheckBox.setSelected(false);
                 surgicalProceduresCheckBox.setSelected(false);
