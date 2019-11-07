@@ -146,4 +146,9 @@ public class LayoutWithDetailedInformationController {
             main.getDogModelObservableList().add(dogModel);
         }
     }
+    @FXML
+    public void deleteButtonHandle(){
+        int selectedItem = dogsCollection.getSelectionModel().getSelectedIndex();
+        dogsCollection.getItems().remove(selectedItem);
+    }
 }
