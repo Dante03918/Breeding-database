@@ -47,8 +47,8 @@
                   <Label fx:id="coatLabel" layoutX="208.0" layoutY="142.0" text="coatLabel" />
                   <TextArea fx:id="textArea" layoutX="15.0" layoutY="164.0" prefHeight="220.0" prefWidth="390.0" />
                   <Button layoutX="344.0" layoutY="66.0" mnemonicParsing="false" onAction="#newButtonHandle" text="New..." />
-                  <Button layoutX="344.0" layoutY="99.0" mnemonicParsing="false" text="Edit..." AnchorPane.bottomAnchor="275.0" AnchorPane.topAnchor="99.0" />
                   <Button layoutX="344.0" layoutY="130.0" mnemonicParsing="false" onAction="#deleteButtonHandle" text="Delete" />
+                  <Button layoutX="342.0" layoutY="99.0" mnemonicParsing="false" onAction="#editButtonHandle" text="Edit..." />
                </children>
             </AnchorPane>
         </items>

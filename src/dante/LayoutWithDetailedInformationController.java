@@ -75,6 +75,7 @@ public class LayoutWithDetailedInformationController {
         vaccinationsCheckBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+
                 littersCheckBox.setSelected(false);
                 heatCheckBox.setSelected(false);
                 surgicalProceduresCheckBox.setSelected(false);
@@ -145,6 +146,23 @@ public class LayoutWithDetailedInformationController {
         if(clickedOk){
             main.getDogModelObservableList().add(dogModel);
         }
+    }
+    @FXML
+    public void editButtonHandle(){
+    DogModel model = dogsCollection.getSelectionModel().getSelectedItem();
+    if(model != null) {
+        boolean clickedOk = main.showEditLayout(model);
+        if (clickedOk) {
+            showDogDetails(model);
+        }
+    } else {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Ostrzeżenie");
+        alert.setHeaderText("Żaden obiekt z listy nie został wybrany");
+        alert.setContentText("Wybierz psa na liście z lewej strony okna");
+
+        alert.showAndWait();
+    }
     }
     @FXML
     public void deleteButtonHandle(){

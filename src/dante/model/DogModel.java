@@ -26,13 +26,13 @@ public class DogModel {
         this.name = new SimpleStringProperty(name);
         this.sex = new SimpleStringProperty(sex);
 
-        this.breed = new SimpleStringProperty("Lhasa Apso");
-        this.coat = new SimpleStringProperty("Czerwony");
-        this.vaccinations = new SimpleStringProperty("03.02.2015");
-        this.litters = new SimpleStringProperty("Miot xyz");
-        this.surgicalProcedures = new SimpleStringProperty("Sterylizacja 23.12.2019");
-        this.heat = new SimpleStringProperty("12.10.2017");
-        this.birthday = new SimpleStringProperty("20.12.2001");
+        this.breed = new SimpleStringProperty(null);
+        this.coat = new SimpleStringProperty(null);
+        this.vaccinations = new SimpleStringProperty(null);
+        this.litters = new SimpleStringProperty(null);
+        this.surgicalProcedures = new SimpleStringProperty(null);
+        this.heat = new SimpleStringProperty(null);
+        this.birthday = new SimpleStringProperty(null);
     }
 
     public String getName() {

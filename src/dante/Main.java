@@ -10,8 +10,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import main.model.DogCollectionWrapper;
 import main.model.DogModel;
 
+import javax.xml.bind.*;
+import java.io.File;
 import java.io.IOException;
 
 public class Main extends Application {
@@ -22,14 +25,14 @@ public class Main extends Application {
    private ObservableList<DogModel> dogModelObservableList = FXCollections.observableArrayList();
 
    public Main(){
-       dogModelObservableList.add(new DogModel("Amelka", "suka"));
-       dogModelObservableList.add(new DogModel("Ignacy", "pies"));
-       dogModelObservableList.add(new DogModel("Alicja", "suka"));
-       dogModelObservableList.add(new DogModel("Zosia", "suka"));
-       dogModelObservableList.add(new DogModel("Helenka", "suka"));
-       dogModelObservableList.add(new DogModel("Lena", "suka"));
-       dogModelObservableList.add(new DogModel("Czesio", "pies"));
-       dogModelObservableList.add(new DogModel("Gniewko", "pies"));
+//       dogModelObservableList.add(new DogModel("Amelka", "suka"));
+//       dogModelObservableList.add(new DogModel("Ignacy", "pies"));
+//       dogModelObservableList.add(new DogModel("Alicja", "suka"));
+//       dogModelObservableList.add(new DogModel("Zosia", "suka"));
+//       dogModelObservableList.add(new DogModel("Helenka", "suka"));
+//       dogModelObservableList.add(new DogModel("Lena", "suka"));
+//       dogModelObservableList.add(new DogModel("Czesio", "pies"));
+//       dogModelObservableList.add(new DogModel("Gniewko", "pies"));
    }
 
    public ObservableList<DogModel> getDogModelObservableList(){
@@ -51,6 +54,9 @@ public class Main extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("rootLayout.fxml"));
             rootLayout = (BorderPane) loader.load();
+
+            RootLayoutController controller = new RootLayoutController();
+            controller.setMain(this);
 
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
@@ -105,6 +111,38 @@ public class Main extends Application {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public void loadDataFromFile(File file) {
+        try {
+            JAXBContext context = JAXBContext.newInstance(DogCollectionWrapper.class);
+
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+
+            DogCollectionWrapper wrapper = (DogCollectionWrapper) unmarshaller.unmarshal(file);
+
+            dogModelObservableList.clear();
+            dogModelObservableList.addAll(wrapper.getDogs());
+
+
+
+        }catch (JAXBException e){
+            e.printStackTrace();
+        }
+    }
+    public void saveDataToFile(File file){
+       try{
+           JAXBContext context = JAXBContext.newInstance(DogCollectionWrapper.class);
+           Marshaller marshaller = context.createMarshaller();
+           marshaller.setProperty(marshaller.JAXB_FORMATTED_OUTPUT, true);
+
+           DogCollectionWrapper wrapper = new DogCollectionWrapper();
+           wrapper.setDogs(dogModelObservableList);
+
+           marshaller.marshal(wrapper, file);
+       } catch(JAXBException e){
+           e.printStackTrace();
+       }
     }
 
 
