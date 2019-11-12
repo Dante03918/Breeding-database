@@ -1,13 +1,10 @@
-package main;
+package dante;
 
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import main.model.DogModel;
-
-import java.time.LocalDate;
+import dante.model.DogModel;
 
 public class LayoutWithDetailedInformationController {
 

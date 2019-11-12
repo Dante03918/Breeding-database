@@ -1,6 +1,4 @@
-package main.model;
-
-import javafx.collections.ObservableList;
+package dante.model;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;

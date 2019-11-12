@@ -1,10 +1,10 @@
-package main;
+package dante;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import main.model.DogModel;
+import dante.model.DogModel;
 
 public class LayoutWithEditingOptionsController {
 

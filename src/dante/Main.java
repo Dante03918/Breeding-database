@@ -1,21 +1,22 @@
-package main;
+package dante;
 
+import dante.util.VaccDateUtil;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import main.model.DogCollectionWrapper;
-import main.model.DogModel;
+import dante.model.DogCollectionWrapper;
+import dante.model.DogModel;
 
 import javax.xml.bind.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.prefs.Preferences;
 
 public class Main extends Application {
 
@@ -55,11 +56,12 @@ public class Main extends Application {
             loader.setLocation(Main.class.getResource("rootLayout.fxml"));
             rootLayout = (BorderPane) loader.load();
 
-            RootLayoutController controller = new RootLayoutController();
-            controller.setMain(this);
-
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
+
+            RootLayoutController controller = loader.getController();
+            controller.setRefference(this);
+
             primaryStage.show();
 
         } catch (IOException e){
@@ -124,7 +126,8 @@ public class Main extends Application {
             dogModelObservableList.clear();
             dogModelObservableList.addAll(wrapper.getDogs());
 
-
+            VaccDateUtil vaccDateUtilList = new VaccDateUtil();
+            vaccDateUtilList.setDogCollection(dogModelObservableList);
 
         }catch (JAXBException e){
             e.printStackTrace();
@@ -144,6 +147,25 @@ public class Main extends Application {
            e.printStackTrace();
        }
     }
+
+    public File getFilePathToDogCollectionFile(){
+        Preferences preferences = Preferences.userNodeForPackage(Main.class);
+        String filePath = preferences.get("filePath", null);
+
+        if(filePath != null){
+            return new File(filePath);
+        } else {
+            return null;
+        }
+   }
+
+   public void setFilePathToDogCollectionFile(File file){
+       Preferences preferences = Preferences.userNodeForPackage(Main.class);
+
+       if(file != null){
+           preferences.put("filePath", file.getPath());
+       }
+   }
 
 
     public static void main(String[] args) {
