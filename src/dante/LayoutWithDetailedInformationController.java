@@ -1,5 +1,6 @@
 package dante;
 
+import dante.util.DateUtil;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -42,16 +43,11 @@ public class LayoutWithDetailedInformationController {
     private void initialize(){
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
 
-       // showDogDetails(null);
-
         dogsCollection.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showDogDetails(newValue));
-
-
     }
 
     public void setMain(Main main){
         this.main = main;
-
 
         dogsCollection.setItems(main.getDogModelObservableList());
     }
@@ -114,7 +110,10 @@ public class LayoutWithDetailedInformationController {
 
             }
         });
+
+
     }
+
 
 
     public String setText(DogModel dogModel, String checkBoxLabel){

@@ -1,5 +1,6 @@
 package dante;
 
+import dante.util.DateUtil;
 import dante.util.VaccDateUtil;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -16,6 +17,7 @@ import dante.model.DogModel;
 import javax.xml.bind.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.prefs.Preferences;
 
 public class Main extends Application {
@@ -24,6 +26,10 @@ public class Main extends Application {
    private BorderPane rootLayout;
 
    private ObservableList<DogModel> dogModelObservableList = FXCollections.observableArrayList();
+
+   private ArrayList<String> stringContentForAlert = new ArrayList<>();
+
+   public String charsChain = "";
 
    public Main(){
 //       dogModelObservableList.add(new DogModel("Amelka", "suka"));
@@ -39,7 +45,6 @@ public class Main extends Application {
    public ObservableList<DogModel> getDogModelObservableList(){
        return dogModelObservableList;
    }
-
     @Override
     public void start(Stage primaryStage) throws Exception{
 
@@ -49,7 +54,9 @@ public class Main extends Application {
         initRootLayout();
         showDetailedInformationLayout();
     }
-
+    public Stage getPrimaryStage(){
+       return primaryStage;
+    }
     public void initRootLayout(){
         try{
             FXMLLoader loader = new FXMLLoader();
@@ -68,7 +75,6 @@ public class Main extends Application {
             e.printStackTrace();
         }
     }
-
     public void showDetailedInformationLayout(){
         try{
             FXMLLoader loader = new FXMLLoader();
@@ -84,11 +90,6 @@ public class Main extends Application {
             e.printStackTrace();
         }
     }
-
-    public Stage getPrimaryStage() {
-        return primaryStage;
-    }
-
     public boolean showEditLayout(DogModel dogModel){
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -126,8 +127,9 @@ public class Main extends Application {
             dogModelObservableList.clear();
             dogModelObservableList.addAll(wrapper.getDogs());
 
-            VaccDateUtil vaccDateUtilList = new VaccDateUtil();
-            vaccDateUtilList.setDogCollection(dogModelObservableList);
+            sendDogModelsFromObservableListToOtheClass();
+
+            charsChain = buildStringFromList();
 
         }catch (JAXBException e){
             e.printStackTrace();
@@ -166,6 +168,34 @@ public class Main extends Application {
            preferences.put("filePath", file.getPath());
        }
    }
+   public void sendDogModelsFromObservableListToOtheClass(){
+
+       DateUtil dateUtil = new DateUtil();
+
+       for(DogModel model : dogModelObservableList){
+          stringContentForAlert = dateUtil.extractDateFromString(model.getName(), model.getVaccinations());
+       }
+    }
+    public String buildStringFromList(){
+
+       //stringContentForAlert = getStringContentForAlert();
+
+        StringBuilder stringBuilder = new StringBuilder();
+        String returnValue = "";
+
+        if(stringContentForAlert.size() != 0) {
+            //System.out.println("If rozpoczety");
+            for (String s : stringContentForAlert) {
+                //System.out.println(s);
+                stringBuilder.append(s);
+                stringBuilder.append("\n");
+            }
+            returnValue = stringBuilder.toString();
+        } else{
+            returnValue = "";
+        }
+        return returnValue;
+    }
 
 
     public static void main(String[] args) {

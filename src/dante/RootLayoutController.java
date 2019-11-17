@@ -1,10 +1,11 @@
 package dante;
 
-import dante.util.VaccDateUtil;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RootLayoutController {
@@ -33,9 +34,18 @@ public class RootLayoutController {
         if(file != null){
             main.loadDataFromFile(file);
             main.setFilePathToDogCollectionFile(file);
-
-
         }
+        String contentForAlert = main.charsChain;
+
+        if(!contentForAlert.isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Psy do szczepienia");
+            alert.setContentText(contentForAlert);
+            alert.showAndWait();
+            }
+
+
+
     }
 
     @FXML

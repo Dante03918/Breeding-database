@@ -8,7 +8,7 @@ import java.util.List;
 public class VaccDateUtil {
 
     private List<DogModel> dogCollection;
-    public ArrayList listWithVaccDate;
+    public ArrayList listWithVaccDate = new ArrayList();
 
 
     public void setDogCollection(List<DogModel> dogCollection){
@@ -17,7 +17,8 @@ public class VaccDateUtil {
 
     public List listWithDates(){
         for(DogModel dogModel:dogCollection){
-            listWithVaccDate.add(dogModel.getVaccinations())
+            listWithVaccDate.add(dogModel.getVaccinations());
         }
+        return listWithVaccDate;
     }
 }
