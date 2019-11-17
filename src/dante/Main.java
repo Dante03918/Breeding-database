@@ -1,7 +1,6 @@
 package dante;
 
 import dante.util.DateUtil;
-import dante.util.VaccDateUtil;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,6 +17,8 @@ import javax.xml.bind.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.prefs.Preferences;
 
 public class Main extends Application {
@@ -27,7 +28,7 @@ public class Main extends Application {
 
    private ObservableList<DogModel> dogModelObservableList = FXCollections.observableArrayList();
 
-   private ArrayList<String> stringContentForAlert = new ArrayList<>();
+   private Set<String> stringContentForAlert = new HashSet<>();
 
    public String charsChain = "";
 
@@ -173,9 +174,10 @@ public class Main extends Application {
        DateUtil dateUtil = new DateUtil();
 
        for(DogModel model : dogModelObservableList){
-          stringContentForAlert = dateUtil.extractDateFromString(model.getName(), model.getVaccinations());
+          dateUtil.extractDateFromString(model.getName(), model.getVaccinations());
        }
-    }
+       stringContentForAlert = dateUtil.stringContentForAlert;
+   }
     public String buildStringFromList(){
 
        //stringContentForAlert = getStringContentForAlert();
@@ -184,9 +186,7 @@ public class Main extends Application {
         String returnValue = "";
 
         if(stringContentForAlert.size() != 0) {
-            //System.out.println("If rozpoczety");
             for (String s : stringContentForAlert) {
-                //System.out.println(s);
                 stringBuilder.append(s);
                 stringBuilder.append("\n");
             }
