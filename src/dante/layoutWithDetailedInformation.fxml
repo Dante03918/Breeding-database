@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -33,10 +34,6 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <CheckBox fx:id="vaccinationsCheckBox" layoutX="32.0" layoutY="39.0" mnemonicParsing="false" text="Szczepienia" />
-                  <CheckBox fx:id="surgicalProceduresCheckBox" layoutX="136.0" layoutY="39.0" mnemonicParsing="false" text="Zabiegi" />
-                  <CheckBox fx:id="heatCheckBox" layoutX="222.0" layoutY="39.0" mnemonicParsing="false" text="Cieczki" />
-                  <CheckBox fx:id="littersCheckBox" layoutX="310.0" layoutY="39.0" mnemonicParsing="false" text="Mioty" />
                   <Label layoutX="18.0" layoutY="70.0" text="Data urodzenia" />
                   <Label layoutX="18.0" layoutY="94.0" text="Płeć" />
                   <Label layoutX="18.0" layoutY="118.0" text="Rasa" />
@@ -49,6 +46,14 @@
                   <Button layoutX="344.0" layoutY="66.0" mnemonicParsing="false" onAction="#newButtonHandle" text="New..." />
                   <Button layoutX="344.0" layoutY="130.0" mnemonicParsing="false" onAction="#deleteButtonHandle" text="Delete" />
                   <Button layoutX="342.0" layoutY="99.0" mnemonicParsing="false" onAction="#editButtonHandle" text="Edit..." />
+                  <RadioButton fx:id="littersButton" layoutX="316.0" layoutY="39.0" mnemonicParsing="false" text="Mioty">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="ButtonsGroup" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="heatButton" layoutX="230.0" layoutY="39.0" mnemonicParsing="false" text="Cieczki" toggleGroup="$ButtonsGroup" />
+                  <RadioButton fx:id="surgicalProceduresButton" layoutX="130.0" layoutY="39.0" mnemonicParsing="false" text="Zabiegi" toggleGroup="$ButtonsGroup" />
+                  <RadioButton fx:id="vaccinationsButton" layoutX="15.0" layoutY="39.0" mnemonicParsing="false" text="Szczepienia" toggleGroup="$ButtonsGroup" />
                </children>
             </AnchorPane>
         </items>

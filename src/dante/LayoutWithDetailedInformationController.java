@@ -14,22 +14,22 @@ public class LayoutWithDetailedInformationController {
     @FXML
     private TableColumn<DogModel, String> nameColumn;
 
-//    @FXML
+    //    @FXML
 //    private Label nameLabel;
     @FXML
-    private Label  sexLabel;
+    private Label sexLabel;
     @FXML
-    private Label  breedLabel;
+    private Label breedLabel;
     @FXML
-    private Label  coatLabel;
+    private Label coatLabel;
     @FXML
-    private CheckBox vaccinationsCheckBox;
+    private RadioButton vaccinationsButton;
     @FXML
-    private CheckBox  littersCheckBox;
+    private RadioButton littersButton;
     @FXML
-    private CheckBox  surgicalProceduresCheckBox;
+    private RadioButton surgicalProceduresButton;
     @FXML
-    private CheckBox  heatCheckBox;
+    private RadioButton heatButton;
     @FXML
     private Label birthdayLabel;
     @FXML
@@ -37,23 +37,24 @@ public class LayoutWithDetailedInformationController {
 
     private Main main;
 
-    public LayoutWithDetailedInformationController(){}
+    public LayoutWithDetailedInformationController() {
+    }
 
     @FXML
-    private void initialize(){
+    private void initialize() {
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
 
         dogsCollection.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showDogDetails(newValue));
     }
 
-    public void setMain(Main main){
+    public void setMain(Main main) {
         this.main = main;
 
         dogsCollection.setItems(main.getDogModelObservableList());
     }
 
-    public void showDogDetails(DogModel dogModel){
-        if(dogModel != null){
+    public void showDogDetails(DogModel dogModel) {
+        if (dogModel != null) {
             sexLabel.setText(dogModel.getSex());
             breedLabel.setText(dogModel.getBreed());
             coatLabel.setText(dogModel.getCoat());
@@ -65,75 +66,58 @@ public class LayoutWithDetailedInformationController {
             textArea.setText("");
         }
 
-        vaccinationsCheckBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+        DogModel selectedItem = dogsCollection.getSelectionModel().getSelectedItem();
 
-                littersCheckBox.setSelected(false);
-                heatCheckBox.setSelected(false);
-                surgicalProceduresCheckBox.setSelected(false);
+        if (vaccinationsButton.isSelected()) {
 
-                textArea.setText(setText(dogModel, "vaccinations"));
+            if (!selectedItem.getVaccinations().isEmpty()) {
+
+                textArea.setText(selectedItem.getVaccinations());
+
+            } else {
+
+                textArea.setText("Lista szczepień jest pusta.");
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning!");
+                alert.setHeaderText(null);
+                alert.setContentText("Nie wybrano psa z listy po lewej, lub lista szczepień jest pusta");
+                alert.show();
             }
-        });
+        } else if (heatButton.isSelected()) {
 
-        littersCheckBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                vaccinationsCheckBox.setSelected(false);
-                heatCheckBox.setSelected(false);
-                surgicalProceduresCheckBox.setSelected(false);
+            if (selectedItem.getSex().equals("pies")) {
 
-                textArea.setText(setText(dogModel, "litters"));
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Wskazówka");
+                alert.setHeaderText(null);
+                alert.setContentText("Pies jest tak skonstruowany, że nie posiada cieczki ;) \n Wybierz innego psa, lub inne informacje");
+                alert.showAndWait();
+
+            } else {
+
+                textArea.setText(selectedItem.getHeat());
             }
-        });
+        } else if(littersButton.isSelected()){
 
-        surgicalProceduresCheckBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                littersCheckBox.setSelected(false);
-                heatCheckBox.setSelected(false);
-                vaccinationsCheckBox.setSelected(false);
+            if(selectedItem.getLitters().isEmpty()){
+                textArea.setText("Nie wprowadzono żadnych miotów");
 
-                textArea.setText(setText(dogModel, "surgical"));
+            } else{
+                textArea.setText(selectedItem.getLitters());
             }
-        });
+        } else if(surgicalProceduresButton.isSelected()){
 
-        heatCheckBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                littersCheckBox.setSelected(false);
-                surgicalProceduresCheckBox.setSelected(false);
-                vaccinationsCheckBox.setSelected(false);
+            if(selectedItem.getSurgicalProcedures().isEmpty()){
 
-                textArea.setText(setText(dogModel, "heat"));
+                textArea.setText("Lista zabiegów jest pusta.");
 
+            } else{
+
+                textArea.setText(selectedItem.getSurgicalProcedures());
             }
-        });
-
-
+        }
     }
 
-
-
-    public String setText(DogModel dogModel, String checkBoxLabel){
-
-         String variableValue = "";
-
-        if(checkBoxLabel.equals("vaccinations")){
-          variableValue = dogModel.getVaccinations();
-        }
-        if(checkBoxLabel.equals("litters")){
-            variableValue = dogModel.getLitters();
-        }
-        if (checkBoxLabel.equals("surgical")){
-            variableValue = dogModel.getSurgicalProcedures();
-        }
-        if(checkBoxLabel.equals("heat")){
-            variableValue = dogModel.getHeat();
-        }
-        return variableValue;
-    }
 
     @FXML
     public void newButtonHandle(){
@@ -145,11 +129,11 @@ public class LayoutWithDetailedInformationController {
     }
     @FXML
     public void editButtonHandle(){
-    DogModel model = dogsCollection.getSelectionModel().getSelectedItem();
-    if(model != null) {
-        boolean clickedOk = main.showEditLayout(model);
+        DogModel selectedItem = dogsCollection.getSelectionModel().getSelectedItem();
+    if(selectedItem != null) {
+        boolean clickedOk = main.showEditLayout(selectedItem);
         if (clickedOk) {
-            showDogDetails(model);
+            showDogDetails(selectedItem);
         }
     } else {
         Alert alert = new Alert(Alert.AlertType.WARNING);

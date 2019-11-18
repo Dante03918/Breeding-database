@@ -40,6 +40,7 @@ public class RootLayoutController {
         if(!contentForAlert.isEmpty()){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Psy do szczepienia");
+            alert.setHeaderText(null);
             alert.setContentText(contentForAlert);
             alert.showAndWait();
             }
@@ -72,5 +73,9 @@ public class RootLayoutController {
         } else {
             handleSaveAs();
         }
+    }
+    @FXML
+    public void handleExit(){
+        System.exit(0);
     }
 }
