@@ -26,6 +26,8 @@ public class Main extends Application {
    private Stage primaryStage;
    private BorderPane rootLayout;
 
+   public boolean saveFlag = false;
+
    private ObservableList<DogModel> dogModelObservableList = FXCollections.observableArrayList();
 
    private Set<String> stringContentForAlert = new HashSet<>();
@@ -33,14 +35,6 @@ public class Main extends Application {
    public String charsChain = "";
 
    public Main(){
-//       dogModelObservableList.add(new DogModel("Amelka", "suka"));
-//       dogModelObservableList.add(new DogModel("Ignacy", "pies"));
-//       dogModelObservableList.add(new DogModel("Alicja", "suka"));
-//       dogModelObservableList.add(new DogModel("Zosia", "suka"));
-//       dogModelObservableList.add(new DogModel("Helenka", "suka"));
-//       dogModelObservableList.add(new DogModel("Lena", "suka"));
-//       dogModelObservableList.add(new DogModel("Czesio", "pies"));
-//       dogModelObservableList.add(new DogModel("Gniewko", "pies"));
    }
 
    public ObservableList<DogModel> getDogModelObservableList(){
@@ -87,6 +81,8 @@ public class Main extends Application {
             LayoutWithDetailedInformationController controller = loader.getController();
             controller.setMain(this);
 
+            autoLoadLastOpenedFile();
+
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -117,6 +113,14 @@ public class Main extends Application {
         }
     }
 
+    public void autoLoadLastOpenedFile(){
+        Preferences preferences = Preferences.userNodeForPackage(Main.class);
+        System.out.println(preferences.get("filePath",null));
+        File file = new File(preferences.get("filePath",null));
+        if(preferences.get("filePath",null) != null){
+            loadDataFromFile(file);
+        }
+    }
     public void loadDataFromFile(File file) {
         try {
             JAXBContext context = JAXBContext.newInstance(DogCollectionWrapper.class);

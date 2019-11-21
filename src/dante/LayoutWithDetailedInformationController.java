@@ -14,8 +14,6 @@ public class LayoutWithDetailedInformationController {
     @FXML
     private TableColumn<DogModel, String> nameColumn;
 
-    //    @FXML
-//    private Label nameLabel;
     @FXML
     private Label sexLabel;
     @FXML
@@ -35,18 +33,75 @@ public class LayoutWithDetailedInformationController {
     @FXML
     private TextArea textArea;
 
+    private String vaccinationsString;
+    private String littersString;
+    private String surgicalProceduresString;
+    private String heatString;
+    private String sex;
+
     private Main main;
 
-    public LayoutWithDetailedInformationController() {
-    }
 
     @FXML
     private void initialize() {
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
 
-        dogsCollection.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showDogDetails(newValue));
-    }
+        dogsCollection.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<DogModel>() {
+            @Override
+            public void changed(ObservableValue<? extends DogModel> observable, DogModel oldValue, DogModel newValue) {
+                if(newValue != null){
+                    showDogDetails(newValue);
 
+                }
+
+            }
+        });
+        vaccinationsButton.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (newValue) {
+
+                    textArea.setText(vaccinationsString);
+                }
+            }
+        });
+        heatButton.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+
+                if (newValue) {
+                    if(sex != null && sex.equals("pies")){
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Wskazówka");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Pies jest tak skonstruowany, że nie posiada cieczki ;)");
+                        alert.showAndWait();
+                    }else {
+                        textArea.setText(heatString);
+
+                        System.out.println("Cieczki");
+                    }
+                }
+            }
+        });
+        littersButton.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (newValue) {
+                        textArea.setText(littersString);
+                        System.out.println("Mioty");
+                }
+            }
+        });
+        surgicalProceduresButton.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (newValue) {
+                    textArea.setText(surgicalProceduresString);
+                    System.out.println("Zabiegi");                }
+            }
+        });
+    }
     public void setMain(Main main) {
         this.main = main;
 
@@ -55,10 +110,24 @@ public class LayoutWithDetailedInformationController {
 
     public void showDogDetails(DogModel dogModel) {
         if (dogModel != null) {
+
+            vaccinationsButton.setSelected(false);
+            littersButton.setSelected(false);
+            surgicalProceduresButton.setSelected(false);
+            heatButton.setSelected(false);
+
+            textArea.setText("");
+
             sexLabel.setText(dogModel.getSex());
             breedLabel.setText(dogModel.getBreed());
             coatLabel.setText(dogModel.getCoat());
             birthdayLabel.setText(dogModel.getBirthday());
+
+            vaccinationsString = dogModel.getVaccinations();
+            littersString = dogModel.getLitters();
+            surgicalProceduresString = dogModel.getSurgicalProcedures();
+            heatString = dogModel.getHeat();
+            sex = dogModel.getSex();
         } else {
             sexLabel.setText("");
             breedLabel.setText("");
@@ -66,58 +135,7 @@ public class LayoutWithDetailedInformationController {
             textArea.setText("");
         }
 
-        DogModel selectedItem = dogsCollection.getSelectionModel().getSelectedItem();
-
-        if (vaccinationsButton.isSelected()) {
-
-            if (!selectedItem.getVaccinations().isEmpty()) {
-
-                textArea.setText(selectedItem.getVaccinations());
-
-            } else {
-
-                textArea.setText("Lista szczepień jest pusta.");
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Warning!");
-                alert.setHeaderText(null);
-                alert.setContentText("Nie wybrano psa z listy po lewej, lub lista szczepień jest pusta");
-                alert.show();
-            }
-        } else if (heatButton.isSelected()) {
-
-            if (selectedItem.getSex().equals("pies")) {
-
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Wskazówka");
-                alert.setHeaderText(null);
-                alert.setContentText("Pies jest tak skonstruowany, że nie posiada cieczki ;) \n Wybierz innego psa, lub inne informacje");
-                alert.showAndWait();
-
-            } else {
-
-                textArea.setText(selectedItem.getHeat());
-            }
-        } else if(littersButton.isSelected()){
-
-            if(selectedItem.getLitters().isEmpty()){
-                textArea.setText("Nie wprowadzono żadnych miotów");
-
-            } else{
-                textArea.setText(selectedItem.getLitters());
-            }
-        } else if(surgicalProceduresButton.isSelected()){
-
-            if(selectedItem.getSurgicalProcedures().isEmpty()){
-
-                textArea.setText("Lista zabiegów jest pusta.");
-
-            } else{
-
-                textArea.setText(selectedItem.getSurgicalProcedures());
-            }
-        }
     }
-
 
     @FXML
     public void newButtonHandle(){

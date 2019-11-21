@@ -5,8 +5,7 @@ import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class RootLayoutController {
 
@@ -16,10 +15,6 @@ public class RootLayoutController {
         this.main = main;
     }
 
-//    @FXML
-//    public void handleNew(){
-//        dante.getDogModelObservableList().clear();
-//    }
 
     @FXML
     public void handleOpen(){
@@ -44,9 +39,11 @@ public class RootLayoutController {
             alert.setContentText(contentForAlert);
             alert.showAndWait();
             }
-
-
-
+    }
+    @FXML
+    public void handleNew() {
+        main.getDogModelObservableList().clear();
+        main.setFilePathToDogCollectionFile(null);
     }
 
     @FXML
@@ -62,6 +59,7 @@ public class RootLayoutController {
 
         if(file != null){
             main.saveDataToFile(file);
+            main.saveFlag = true;
         }
     }
 
@@ -70,6 +68,7 @@ public class RootLayoutController {
         File dogList = main.getFilePathToDogCollectionFile();
         if(dogList != null){
             main.saveDataToFile(dogList);
+            main.saveFlag = true;
         } else {
             handleSaveAs();
         }
