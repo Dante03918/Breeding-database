@@ -1,6 +1,8 @@
 package dante;
 
+import dante.util.DateUtil;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -31,6 +33,8 @@ public class LayoutWithEditingOptionsController {
     private DogModel dogModel;
     private boolean clickedOk;
 
+    DateUtil dateUtil = new DateUtil();
+
     @FXML
     public  void initialize(){
     }
@@ -59,18 +63,37 @@ public class LayoutWithEditingOptionsController {
 
     @FXML
     public void okHandle(){
+
+        boolean closeCondition = true;
+
         dogModel.setName(nameField.getText());
         dogModel.setSex(sexField.getText());
         dogModel.setBreed(breedField.getText());
-        dogModel.setCoat(coatField.getText());
         dogModel.setBirthday(birthdayField.getText());
-        dogModel.setVaccinations(vaccinationsArea.getText());
+        if(dateUtil.dateValidation(vaccinationsArea.getText())){
+            dogModel.setVaccinations(vaccinationsArea.getText());
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Coś poszło nie tak");
+            alert.setHeaderText(null);
+            alert.setContentText("Któraś z wpisanych dat w polu 'Szczepienia' ma niepoprawny format. \n" +
+                    "Prawidłowy format daty to 'dd.MM.yyyy'");
+            alert.showAndWait();
+
+            clickedOk = false;
+
+            closeCondition = false;
+        }
+
+        dogModel.setCoat(coatField.getText());
         dogModel.setLitters(littersArea.getText());
         dogModel.setSurgicalProcedures(surgicalArea.getText());
         dogModel.setHeat(heatArea.getText());
 
         clickedOk = true;
-        editStage.close();
+        if(closeCondition) {
+            editStage.close();
+        }
     }
     @FXML
     public void cancelHandle(){

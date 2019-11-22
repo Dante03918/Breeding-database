@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
@@ -16,7 +17,6 @@ import dante.model.DogModel;
 import javax.xml.bind.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.prefs.Preferences;
@@ -32,7 +32,7 @@ public class Main extends Application {
 
    private Set<String> stringContentForAlert = new HashSet<>();
 
-   public String charsChain = "";
+   public String vaccinationsFieldContent = "";
 
    public Main(){
    }
@@ -115,10 +115,31 @@ public class Main extends Application {
 
     public void autoLoadLastOpenedFile(){
         Preferences preferences = Preferences.userNodeForPackage(Main.class);
-        System.out.println(preferences.get("filePath",null));
-        File file = new File(preferences.get("filePath",null));
+        File file = null;
+        try{
+        file = new File(preferences.get("filePath",null));
+        } catch (Exception e){
+            e.printStackTrace();
+        }
         if(preferences.get("filePath",null) != null){
-            loadDataFromFile(file);
+            try {
+                loadDataFromFile(file);
+                setFilePathToDogCollectionFile(file);
+                if(!vaccinationsFieldContent.isEmpty()){
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Psy do szczepienia");
+                    alert.setHeaderText(null);
+                    alert.setContentText(vaccinationsFieldContent);
+                    alert.showAndWait();
+                }
+            } catch (NullPointerException e){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Nie znaleziono pliku fxml");
+
+                alert.showAndWait();
+            }
         }
     }
     public void loadDataFromFile(File file) {
@@ -134,7 +155,7 @@ public class Main extends Application {
 
             sendDogModelsFromObservableListToOtheClass();
 
-            charsChain = buildStringFromList();
+            vaccinationsFieldContent = buildStringFromList();
 
         }catch (JAXBException e){
             e.printStackTrace();

@@ -5,6 +5,7 @@ import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
 
 import java.io.File;
+import java.nio.file.Paths;
 
 
 public class RootLayoutController {
@@ -20,9 +21,11 @@ public class RootLayoutController {
     public void handleOpen(){
         FileChooser fileChooser = new FileChooser();
 
+        String currentPath = Paths.get(".").toAbsolutePath().normalize().toString();
 
         FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("XML files (*.xml", "*.xml");
         fileChooser.getExtensionFilters().add(filter);
+        fileChooser.setInitialDirectory(new File(currentPath));
 
         File file = fileChooser.showOpenDialog(main.getPrimaryStage());
 
@@ -30,7 +33,7 @@ public class RootLayoutController {
             main.loadDataFromFile(file);
             main.setFilePathToDogCollectionFile(file);
         }
-        String contentForAlert = main.charsChain;
+        String contentForAlert = main.vaccinationsFieldContent;
 
         if(!contentForAlert.isEmpty()){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -72,6 +75,15 @@ public class RootLayoutController {
         } else {
             handleSaveAs();
         }
+    }
+    @FXML
+    public void handleAbout(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Info");
+        alert.setHeaderText(null);
+        alert.setContentText("This is my first desktop app. \n " +
+                "I builded it becasue i want store basic information about our dogs in one place. \n ");
+        alert.showAndWait();
     }
     @FXML
     public void handleExit(){
