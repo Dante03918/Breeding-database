@@ -1,6 +1,7 @@
 package dante;
 
 import dante.util.DateUtil;
+import dante.util.StringUtil;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,10 +31,17 @@ public class Main extends Application {
 
    private ObservableList<DogModel> dogModelObservableList = FXCollections.observableArrayList();
 
-   private Set<String> stringContentForAlert = new HashSet<>();
+   private Set<String> overdueRabiesVaccinationsSet = new HashSet<>();
+    private Set<String> monthBeforeRabiesVaccinationExpireDateSet = new HashSet<>();
+    private Set<String> overdueOtherVaccinationsSet = new HashSet<>();
+    private Set<String> monthBeforeOtherVaccinationExpireDateSet = new HashSet<>();
 
-   public String vaccinationsFieldContent = "";
 
+    public String contentForAlert = "";
+   public String overdueVaccinationsFieldContent = "";
+    public String monthBeforeVaccinationExpireDateAlertContent = "";
+    public String overdueOtherVaccinationsFieldContent = "";
+    public String monthBeforeOtherVaccinationExpireDateAlertContent = "";
    public Main(){
    }
 
@@ -125,13 +133,7 @@ public class Main extends Application {
             try {
                 loadDataFromFile(file);
                 setFilePathToDogCollectionFile(file);
-                if(!vaccinationsFieldContent.isEmpty()){
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Psy do szczepienia");
-                    alert.setHeaderText(null);
-                    alert.setContentText(vaccinationsFieldContent);
-                    alert.showAndWait();
-                }
+
             } catch (NullPointerException e){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
@@ -153,9 +155,22 @@ public class Main extends Application {
             dogModelObservableList.clear();
             dogModelObservableList.addAll(wrapper.getDogs());
 
-            sendDogModelsFromObservableListToOtheClass();
+            retrieveRabiesVaccinationDates();
+            retrieveOtherVaccinationDates();
 
-            vaccinationsFieldContent = buildStringFromList();
+            StringUtil stringUtil = new StringUtil();
+
+            contentForAlert = stringUtil.builder(overdueRabiesVaccinationsSet, monthBeforeRabiesVaccinationExpireDateSet, overdueOtherVaccinationsSet,
+                    monthBeforeOtherVaccinationExpireDateSet);
+
+            if(!contentForAlert.isEmpty()){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Informacje");
+                alert.setHeaderText(null);
+                alert.setContentText(contentForAlert);
+
+                alert.showAndWait();
+            }
 
         }catch (JAXBException e){
             e.printStackTrace();
@@ -194,33 +209,51 @@ public class Main extends Application {
            preferences.put("filePath", file.getPath());
        }
    }
-   public void sendDogModelsFromObservableListToOtheClass(){
+   public void retrieveRabiesVaccinationDates(){
 
        DateUtil dateUtil = new DateUtil();
 
+       dateUtil.setMonths(12);
+
        for(DogModel model : dogModelObservableList){
-          dateUtil.extractDateFromString(model.getName(), model.getVaccinations());
+          dateUtil.extractDateFromString(model.getName(), model.getRabiesVaccinations());
+         // dateUtil.extractDateFromString(model.getName(), model.getOtherVaccinations());
        }
-       stringContentForAlert = dateUtil.stringContentForAlert;
+       overdueRabiesVaccinationsSet = dateUtil.overdueVaccinationList;
+       monthBeforeRabiesVaccinationExpireDateSet = dateUtil.monthBeforeVaccinationExpireDateList;
    }
-    public String buildStringFromList(){
+    public void retrieveOtherVaccinationDates(){
 
-       //stringContentForAlert = getStringContentForAlert();
+        DateUtil dateUtil = new DateUtil();
 
-        StringBuilder stringBuilder = new StringBuilder();
-        String returnValue = "";
+        dateUtil.setMonths(24);
 
-        if(stringContentForAlert.size() != 0) {
-            for (String s : stringContentForAlert) {
-                stringBuilder.append(s);
-                stringBuilder.append("\n");
-            }
-            returnValue = stringBuilder.toString();
-        } else{
-            returnValue = "";
+
+        for(DogModel model : dogModelObservableList){
+            //dateUtil.extractDateFromString(model.getName(), model.getRabiesVaccinations());
+            dateUtil.extractDateFromString(model.getName(), model.getOtherVaccinations());
         }
-        return returnValue;
+        overdueOtherVaccinationsSet = dateUtil.overdueVaccinationList;
+        monthBeforeOtherVaccinationExpireDateSet = dateUtil.monthBeforeVaccinationExpireDateList;
     }
+//    public String buildStringFromList(Set<String> collection){
+//
+//       //overdueVaccinations = getStringContentForAlert();
+//
+//        StringBuilder stringBuilder = new StringBuilder();
+//        String returnValue = "";
+//
+//        if(collection.size() != 0) {
+//            for (String s : collection) {
+//                stringBuilder.append(s);
+//                stringBuilder.append("\n");
+//            }
+//            returnValue = stringBuilder.toString();
+//        } else{
+//            returnValue = "";
+//        }
+//        return returnValue;
+//    }
 
 
     public static void main(String[] args) {

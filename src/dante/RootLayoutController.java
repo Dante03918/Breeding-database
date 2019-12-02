@@ -33,7 +33,7 @@ public class RootLayoutController {
             main.loadDataFromFile(file);
             main.setFilePathToDogCollectionFile(file);
         }
-        String contentForAlert = main.vaccinationsFieldContent;
+        String contentForAlert = main.overdueVaccinationsFieldContent;
 
         if(!contentForAlert.isEmpty()){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);

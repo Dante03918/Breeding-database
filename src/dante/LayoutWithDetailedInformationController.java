@@ -1,6 +1,5 @@
 package dante;
 
-import dante.util.DateUtil;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -21,13 +20,15 @@ public class LayoutWithDetailedInformationController {
     @FXML
     private Label coatLabel;
     @FXML
-    private RadioButton vaccinationsButton;
+    private RadioButton rabiesVaccinationsButton;
     @FXML
     private RadioButton littersButton;
     @FXML
     private RadioButton surgicalProceduresButton;
     @FXML
     private RadioButton heatButton;
+    @FXML
+    private RadioButton otherVaccinations;
     @FXML
     private Label birthdayLabel;
     @FXML
@@ -38,6 +39,7 @@ public class LayoutWithDetailedInformationController {
     private String surgicalProceduresString;
     private String heatString;
     private String sex;
+    private String otherVaccinationsString;
 
     private Main main;
 
@@ -51,12 +53,10 @@ public class LayoutWithDetailedInformationController {
             public void changed(ObservableValue<? extends DogModel> observable, DogModel oldValue, DogModel newValue) {
                 if(newValue != null){
                     showDogDetails(newValue);
-
                 }
-
             }
         });
-        vaccinationsButton.selectedProperty().addListener(new ChangeListener<Boolean>() {
+        rabiesVaccinationsButton.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if (newValue) {
@@ -101,6 +101,12 @@ public class LayoutWithDetailedInformationController {
                     System.out.println("Zabiegi");                }
             }
         });
+        otherVaccinations.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                textArea.setText(otherVaccinationsString);
+            }
+        });
     }
     public void setMain(Main main) {
         this.main = main;
@@ -111,7 +117,7 @@ public class LayoutWithDetailedInformationController {
     public void showDogDetails(DogModel dogModel) {
         if (dogModel != null) {
 
-            vaccinationsButton.setSelected(false);
+            rabiesVaccinationsButton.setSelected(false);
             littersButton.setSelected(false);
             surgicalProceduresButton.setSelected(false);
             heatButton.setSelected(false);
@@ -123,11 +129,11 @@ public class LayoutWithDetailedInformationController {
             coatLabel.setText(dogModel.getCoat());
             birthdayLabel.setText(dogModel.getBirthday());
 
-            vaccinationsString = dogModel.getVaccinations();
+            vaccinationsString = dogModel.getRabiesVaccinations();
             littersString = dogModel.getLitters();
             surgicalProceduresString = dogModel.getSurgicalProcedures();
-            heatString = dogModel.getHeat();
             sex = dogModel.getSex();
+            otherVaccinationsString = dogModel.getOtherVaccinations();
         } else {
             sexLabel.setText("");
             breedLabel.setText("");

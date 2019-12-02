@@ -46,14 +46,15 @@
                   <Button layoutX="344.0" layoutY="66.0" mnemonicParsing="false" onAction="#newButtonHandle" text="New..." />
                   <Button layoutX="344.0" layoutY="130.0" mnemonicParsing="false" onAction="#deleteButtonHandle" text="Delete" />
                   <Button layoutX="342.0" layoutY="99.0" mnemonicParsing="false" onAction="#editButtonHandle" text="Edit..." />
-                  <RadioButton fx:id="littersButton" layoutX="316.0" layoutY="39.0" mnemonicParsing="false" text="Mioty">
+                  <RadioButton fx:id="littersButton" layoutX="338.0" layoutY="39.0" mnemonicParsing="false" text="Mioty">
                      <toggleGroup>
                         <ToggleGroup fx:id="ButtonsGroup" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton fx:id="heatButton" layoutX="230.0" layoutY="39.0" mnemonicParsing="false" text="Cieczki" toggleGroup="$ButtonsGroup" />
-                  <RadioButton fx:id="surgicalProceduresButton" layoutX="130.0" layoutY="39.0" mnemonicParsing="false" text="Zabiegi" toggleGroup="$ButtonsGroup" />
-                  <RadioButton fx:id="vaccinationsButton" layoutX="15.0" layoutY="39.0" mnemonicParsing="false" text="Szczepienia" toggleGroup="$ButtonsGroup" />
+                  <RadioButton fx:id="heatButton" layoutX="267.0" layoutY="39.0" mnemonicParsing="false" text="Cieczki" toggleGroup="$ButtonsGroup" />
+                  <RadioButton fx:id="surgicalProceduresButton" layoutX="192.0" layoutY="39.0" mnemonicParsing="false" text="Zabiegi" toggleGroup="$ButtonsGroup" />
+                  <RadioButton fx:id="rabiesVaccinationsButton" layoutX="99.0" layoutY="39.0" mnemonicParsing="false" text="Wścieklizna" toggleGroup="$ButtonsGroup" />
+                  <RadioButton fx:id="otherVaccinations" layoutX="15.0" layoutY="39.0" mnemonicParsing="false" text="Wirusówki" toggleGroup="$ButtonsGroup" />
                </children>
             </AnchorPane>
         </items>

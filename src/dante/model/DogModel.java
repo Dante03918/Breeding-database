@@ -1,7 +1,11 @@
 package dante.model;
 
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+
+import java.util.List;
 
 public class DogModel {
 
@@ -9,10 +13,11 @@ public class DogModel {
     private final StringProperty sex;
     private final StringProperty breed;
     private final StringProperty coat;
-    private final StringProperty vaccinations;
+    private final StringProperty rabiesVaccinations;
+    private final StringProperty otherVaccinations;
     private final StringProperty litters;
     private final StringProperty surgicalProcedures;
-    private final StringProperty heat;
+    private final ListProperty heat;
     private final StringProperty birthday;
 
     public DogModel(){ this(null,null);}
@@ -24,11 +29,12 @@ public class DogModel {
 
         this.breed = new SimpleStringProperty(null);
         this.coat = new SimpleStringProperty(null);
-        this.vaccinations = new SimpleStringProperty(null);
+        this.rabiesVaccinations = new SimpleStringProperty(null);
         this.litters = new SimpleStringProperty(null);
         this.surgicalProcedures = new SimpleStringProperty(null);
-        this.heat = new SimpleStringProperty(null);
+        this.heat = new SimpleListProperty(null);
         this.birthday = new SimpleStringProperty(null);
+        this.otherVaccinations = new SimpleStringProperty(null);
     }
 
     public String getName() {
@@ -79,16 +85,16 @@ public class DogModel {
         this.coat.set(coat);
     }
 
-    public String getVaccinations() {
-        return vaccinations.get();
+    public String getRabiesVaccinations() {
+        return rabiesVaccinations.get();
     }
 
-    public StringProperty vaccinationsProperty() {
-        return vaccinations;
+    public StringProperty rabiesVaccinationsProperty() {
+        return rabiesVaccinations;
     }
 
-    public void setVaccinations(String vaccinations) {
-        this.vaccinations.set(vaccinations);
+    public void setRabiesVaccinations(String rabiesVaccinations) {
+        this.rabiesVaccinations.set(rabiesVaccinations);
     }
 
     public String getLitters() {
@@ -115,17 +121,11 @@ public class DogModel {
         this.surgicalProcedures.set(surgicalProcedures);
     }
 
-    public String getHeat() {
-        return heat.get();
-    }
+    public Object getHeat() { return heat.get(); }
 
-    public StringProperty heatProperty() {
-        return heat;
-    }
+    public ListProperty heatProperty() { return heat; }
 
-    public void setHeat(String heat) {
-        this.heat.set(heat);
-    }
+   // public void setHeat(Object heat) { this.heat.set(heat); }
 
     public void setBirthday(String birthday) {
         this.birthday.set(birthday);
@@ -137,5 +137,17 @@ public class DogModel {
 
     public String getBirthday(){
         return birthday.get();
+    }
+
+    public String getOtherVaccinations() {
+        return otherVaccinations.get();
+    }
+
+    public StringProperty otherVaccinationsProperty() {
+        return otherVaccinations;
+    }
+
+    public void setOtherVaccinations(String otherVaccinations) {
+        this.otherVaccinations.set(otherVaccinations);
     }
 }
