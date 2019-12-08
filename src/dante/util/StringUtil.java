@@ -1,11 +1,14 @@
 package dante.util;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class StringUtil {
 
-    public String builder(Set<String> overRabiesVacc, Set<String> monthRabiesVacc, Set<String> overOtherVacc, Set<String> monthOtherVacc){
+    public String alertBuilder(Set<String> overRabiesVacc, Set<String> monthRabiesVacc, Set<String> overOtherVacc, Set<String> monthOtherVacc){
         StringBuilder stringBuilder = new StringBuilder();
 
         if(!overRabiesVacc.isEmpty()) {
@@ -35,4 +38,26 @@ public class StringUtil {
         }
         return stringBuilder.toString();
 }
+    public List<String> listFromCuttedString(String stringChain){
+
+        List<String> cutted = new ArrayList<>();
+
+            Pattern pattern = Pattern.compile("(\\d{2}\\.\\d{2}\\.\\d{4}.-.\\d{2}\\.\\d{2}\\.\\d{4})");
+            Matcher matcher = pattern.matcher(stringChain);
+
+            while (matcher.find()) {
+                cutted.add(matcher.group(1));
+        }
+
+        return cutted;
+    }
+    public String concatListContent(List<String> list){
+        StringBuilder sb = new StringBuilder();
+
+        for(String s : list){
+            sb.append(s);
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
 }

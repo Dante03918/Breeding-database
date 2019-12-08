@@ -41,7 +41,9 @@ public class LayoutWithDetailedInformationController {
     private String sex;
     private String otherVaccinationsString;
 
+    private DogModel modelRefference;
     private Main main;
+    private DogModel selectedItem;
 
 
     @FXML
@@ -59,17 +61,22 @@ public class LayoutWithDetailedInformationController {
         rabiesVaccinationsButton.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (newValue) {
+                selectedItem = dogsCollection.getSelectionModel().getSelectedItem();
+                if(selectedItemValidate(selectedItem)) {
+
+                    if (newValue) {
 
                     textArea.setText(vaccinationsString);
-                }
+                }}
             }
         });
         heatButton.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                selectedItem = dogsCollection.getSelectionModel().getSelectedItem();
+                if(selectedItemValidate(selectedItem)) {
 
-                if (newValue) {
+                    if (newValue) {
                     if(sex != null && sex.equals("pies")){
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("Wskazówka");
@@ -77,35 +84,42 @@ public class LayoutWithDetailedInformationController {
                         alert.setContentText("Pies jest tak skonstruowany, że nie posiada cieczki ;)");
                         alert.showAndWait();
                     }else {
-                        textArea.setText(heatString);
-
-                        System.out.println("Cieczki");
+                       textArea.setText(modelRefference.getHeats());
                     }
-                }
+                }}
             }
         });
         littersButton.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (newValue) {
+                selectedItem = dogsCollection.getSelectionModel().getSelectedItem();
+                if(selectedItemValidate(selectedItem)) {
+
+                    if (newValue) {
                         textArea.setText(littersString);
                         System.out.println("Mioty");
                 }
-            }
+            }}
         });
         surgicalProceduresButton.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (newValue) {
+                selectedItem = dogsCollection.getSelectionModel().getSelectedItem();
+                if(selectedItemValidate(selectedItem)) {
+
+                    if (newValue) {
                     textArea.setText(surgicalProceduresString);
                     System.out.println("Zabiegi");                }
-            }
+            }}
         });
         otherVaccinations.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                textArea.setText(otherVaccinationsString);
-            }
+                selectedItem = dogsCollection.getSelectionModel().getSelectedItem();
+                if(selectedItemValidate(selectedItem)) {
+
+                    textArea.setText(otherVaccinationsString);
+            }}
         });
     }
     public void setMain(Main main) {
@@ -134,6 +148,8 @@ public class LayoutWithDetailedInformationController {
             surgicalProceduresString = dogModel.getSurgicalProcedures();
             sex = dogModel.getSex();
             otherVaccinationsString = dogModel.getOtherVaccinations();
+
+            modelRefference = dogModel;
         } else {
             sexLabel.setText("");
             breedLabel.setText("");
@@ -153,24 +169,32 @@ public class LayoutWithDetailedInformationController {
     }
     @FXML
     public void editButtonHandle(){
-        DogModel selectedItem = dogsCollection.getSelectionModel().getSelectedItem();
-    if(selectedItem != null) {
+         selectedItem = dogsCollection.getSelectionModel().getSelectedItem();
+    if(selectedItemValidate(selectedItem)) {
         boolean clickedOk = main.showEditLayout(selectedItem);
         if (clickedOk) {
             showDogDetails(selectedItem);
         }
-    } else {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Ostrzeżenie");
-        alert.setHeaderText("Żaden obiekt z listy nie został wybrany");
-        alert.setContentText("Wybierz psa na liście z lewej strony okna");
-
-        alert.showAndWait();
     }
     }
     @FXML
     public void deleteButtonHandle(){
         int selectedItem = dogsCollection.getSelectionModel().getSelectedIndex();
         dogsCollection.getItems().remove(selectedItem);
+    }
+    public boolean selectedItemValidate(DogModel selectedItem){
+        boolean condition;
+        if(selectedItem != null){
+            condition = true;
+        } else {
+            condition = false;
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Ostrzeżenie");
+            alert.setHeaderText("Żaden obiekt z listy nie został wybrany");
+            alert.setContentText("Wybierz psa na liście z lewej strony okna");
+
+            alert.showAndWait();
+        }
+        return condition;
     }
 }

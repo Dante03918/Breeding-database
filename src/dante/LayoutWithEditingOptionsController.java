@@ -1,7 +1,7 @@
 package dante;
 
-import com.sun.istack.internal.Nullable;
 import dante.util.DateUtil;
+import dante.util.StringUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,7 +11,6 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import dante.model.DogModel;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,11 +33,7 @@ public class LayoutWithEditingOptionsController {
     @FXML
     private TextArea surgicalArea;
     @FXML
-    private TextArea heatArea;
-    @FXML
     private TextArea otherVaccinationArea;
-    @FXML
-    private DatePicker birthdayDatePicker;
     @FXML
     private DatePicker heatFromDatePicker;
     @FXML
@@ -53,6 +48,7 @@ public class LayoutWithEditingOptionsController {
     private boolean clickedOk;
 
     DateUtil dateUtil = new DateUtil();
+    StringUtil stringUtil = new StringUtil();
 
     List<String> heatsPeriodList = new ArrayList<>();
 
@@ -65,10 +61,7 @@ public class LayoutWithEditingOptionsController {
                 String firstPart = dateUtil.localDateToString(heatFromDatePicker.getValue());
                 String secondPart = dateUtil.localDateToString(heatToDatePicker.getValue());
                 heatsPeriodList.add(firstPart +" - "+secondPart);
-                System.out.println(heatsPeriodList.get(0));
-
-                listViewItems.clear();
-                listViewItems.addAll(heatsPeriodList);
+                listViewItems.add(firstPart +" - "+secondPart);
 
                 heatsAsListView.setItems(listViewItems);
             }
@@ -81,6 +74,14 @@ public class LayoutWithEditingOptionsController {
 
     public void setDogModel(DogModel dogModel){
 
+        List<String> heatDates;
+        if(dogModel.getHeats() == null){
+            heatDates = new ArrayList<>();
+            System.out.println("Przypisano nowy obiekt array list");
+        }else{
+            System.out.println("wykonano konwersje");
+            heatDates = stringUtil.listFromCuttedString(dogModel.getHeats());
+        }
 
         this.dogModel = dogModel;
 
@@ -89,11 +90,17 @@ public class LayoutWithEditingOptionsController {
         breedField.setText(dogModel.getBreed());
         coatField.setText(dogModel.getCoat());
         birthdayField.setText(dogModel.getBirthday());
-        //birthdayDatePicker.setValue(LocalDate.now());
         rabiesVaccinationsArea.setText(dogModel.getRabiesVaccinations());
         littersArea.setText(dogModel.getLitters());
         surgicalArea.setText(dogModel.getSurgicalProcedures());
         otherVaccinationArea.setText(dogModel.getOtherVaccinations());
+        heatsPeriodList = heatDates;
+        listViewItems.addAll(heatDates);
+        heatsAsListView.setItems(listViewItems);
+
+        for(String s : listViewItems){
+            System.out.println(s);
+        }
     }
 
     public boolean isClickedOk(){
@@ -108,8 +115,7 @@ public class LayoutWithEditingOptionsController {
         dogModel.setName(nameField.getText());
         dogModel.setSex(sexField.getText());
         dogModel.setBreed(breedField.getText());
-        //dogModel.setBirthday(birthdayField.getText()
-        dogModel.setBirthday(dateUtil.localDateToString(birthdayDatePicker.getValue()));
+        dogModel.setBirthday(birthdayField.getText());
         if(dateUtil.dateValidation(rabiesVaccinationsArea.getText())){
             dogModel.setRabiesVaccinations(rabiesVaccinationsArea.getText());
         } else {
@@ -128,7 +134,7 @@ public class LayoutWithEditingOptionsController {
         dogModel.setCoat(coatField.getText());
         dogModel.setLitters(littersArea.getText());
         dogModel.setSurgicalProcedures(surgicalArea.getText());
-
+        dogModel.setHeats(stringUtil.concatListContent(heatsPeriodList));
 
         clickedOk = true;
         if(closeCondition) {

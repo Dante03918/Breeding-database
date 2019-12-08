@@ -4,37 +4,52 @@ import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
+import javax.xml.bind.annotation.*;
+import java.util.ArrayList;
 import java.util.List;
+
 
 public class DogModel {
 
-    private final StringProperty name;
-    private final StringProperty sex;
-    private final StringProperty breed;
-    private final StringProperty coat;
-    private final StringProperty rabiesVaccinations;
-    private final StringProperty otherVaccinations;
-    private final StringProperty litters;
-    private final StringProperty surgicalProcedures;
-    private final ListProperty heat;
-    private final StringProperty birthday;
+    private  StringProperty name;
+    private  StringProperty sex;
+    private  StringProperty breed;
+    private  StringProperty coat;
+    private  StringProperty rabiesVaccinations;
+    private  StringProperty otherVaccinations;
+    private  StringProperty litters;
+    private  StringProperty surgicalProcedures;
+    private  StringProperty heats;
+    private  StringProperty birthday;
 
-    public DogModel(){ this(null,null);}
+    public DogModel(){
 
-    public DogModel(String name, String sex){
-
-        this.name = new SimpleStringProperty(name);
-        this.sex = new SimpleStringProperty(sex);
+        this.name = new SimpleStringProperty(null);
+        this.sex = new SimpleStringProperty(null);
 
         this.breed = new SimpleStringProperty(null);
         this.coat = new SimpleStringProperty(null);
         this.rabiesVaccinations = new SimpleStringProperty(null);
         this.litters = new SimpleStringProperty(null);
         this.surgicalProcedures = new SimpleStringProperty(null);
-        this.heat = new SimpleListProperty(null);
+        this.heats = new SimpleStringProperty(null);
         this.birthday = new SimpleStringProperty(null);
         this.otherVaccinations = new SimpleStringProperty(null);
+    }
+
+    public String getHeats() {
+        return heats.get();
+    }
+
+    public StringProperty heatsProperty() {
+        return heats;
+    }
+
+    public void setHeats(String heats) {
+        this.heats.set(heats);
     }
 
     public String getName() {
@@ -121,11 +136,8 @@ public class DogModel {
         this.surgicalProcedures.set(surgicalProcedures);
     }
 
-    public Object getHeat() { return heat.get(); }
 
-    public ListProperty heatProperty() { return heat; }
 
-   // public void setHeat(Object heat) { this.heat.set(heat); }
 
     public void setBirthday(String birthday) {
         this.birthday.set(birthday);

@@ -36,12 +36,9 @@ public class Main extends Application {
     private Set<String> overdueOtherVaccinationsSet = new HashSet<>();
     private Set<String> monthBeforeOtherVaccinationExpireDateSet = new HashSet<>();
 
-
     public String contentForAlert = "";
    public String overdueVaccinationsFieldContent = "";
-    public String monthBeforeVaccinationExpireDateAlertContent = "";
-    public String overdueOtherVaccinationsFieldContent = "";
-    public String monthBeforeOtherVaccinationExpireDateAlertContent = "";
+
    public Main(){
    }
 
@@ -160,7 +157,7 @@ public class Main extends Application {
 
             StringUtil stringUtil = new StringUtil();
 
-            contentForAlert = stringUtil.builder(overdueRabiesVaccinationsSet, monthBeforeRabiesVaccinationExpireDateSet, overdueOtherVaccinationsSet,
+            contentForAlert = stringUtil.alertBuilder(overdueRabiesVaccinationsSet, monthBeforeRabiesVaccinationExpireDateSet, overdueOtherVaccinationsSet,
                     monthBeforeOtherVaccinationExpireDateSet);
 
             if(!contentForAlert.isEmpty()){
@@ -217,7 +214,7 @@ public class Main extends Application {
 
        for(DogModel model : dogModelObservableList){
           dateUtil.extractDateFromString(model.getName(), model.getRabiesVaccinations());
-         // dateUtil.extractDateFromString(model.getName(), model.getOtherVaccinations());
+          //dateUtil.extractDateFromString(model.getName(), model.getOtherVaccinations());
        }
        overdueRabiesVaccinationsSet = dateUtil.overdueVaccinationList;
        monthBeforeRabiesVaccinationExpireDateSet = dateUtil.monthBeforeVaccinationExpireDateList;
