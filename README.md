@@ -1,5 +1,5 @@
 # Breeding-database
-Aplication to store information about dogs in breeding.
+Aplication was written in JavaFX. Main goal is store information about dogs in breeding.
 
 ![image](https://user-images.githubusercontent.com/45737422/128248703-b61f539a-1ac8-4de2-8e07-1f497cafe325.png)
 
