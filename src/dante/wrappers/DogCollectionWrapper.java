@@ -1,7 +1,11 @@
-package dante.model;
+package dante.wrappers;
 
-import javax.xml.bind.annotation.*;
-import java.util.ArrayList;
+import dante.model.DogModel;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+
 import java.util.List;
 
 @XmlRootElement(name = "dogs")
@@ -18,6 +22,5 @@ public class DogCollectionWrapper {
     public void setDogs(List<DogModel> dogs){
         this.dogs = dogs;
     }
-
 
 }

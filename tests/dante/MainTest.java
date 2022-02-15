@@ -1,10 +1,8 @@
 package dante;
 
-import dante.model.DogCollectionWrapper;
+import dante.wrappers.DogCollectionWrapper;
 import dante.model.DogModel;
 import dante.util.StringUtil;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

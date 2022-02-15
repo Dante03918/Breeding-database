@@ -1,16 +1,7 @@
 package dante.model;
 
-import javafx.beans.property.ListProperty;
-import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
-import javax.xml.bind.annotation.*;
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class DogModel {
 

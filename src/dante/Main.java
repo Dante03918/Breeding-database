@@ -12,7 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import dante.model.DogCollectionWrapper;
+import dante.wrappers.DogCollectionWrapper;
 import dante.model.DogModel;
 
 import javax.xml.bind.*;

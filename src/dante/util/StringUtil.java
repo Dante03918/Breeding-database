@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class StringUtil {
 
@@ -52,12 +53,8 @@ public class StringUtil {
         return cutted;
     }
     public String concatListContent(List<String> list){
-        StringBuilder sb = new StringBuilder();
 
-        for(String s : list){
-            sb.append(s);
-            sb.append("\n");
-        }
-        return sb.toString();
+       return String.join("\n", list);
+
     }
 }
