@@ -1,6 +1,5 @@
 package dante;
 
-//import dante.util.DateUtil;
 
 import dante.util.StringUtil;
 import enums.Gender;
@@ -59,31 +58,25 @@ public class LayoutWithEditingOptionsController {
     private final List<LocalDate> viralVaccDates = new ArrayList<>();
     private final List<HeatModel> heatsPeriods = new ArrayList<>();
 
-    StringUtil stringUtil = new StringUtil();
-
     List<String> heatsPeriodList = new ArrayList<>();
 
     ObservableList<String> listViewItems = FXCollections.observableArrayList();
-
-    List<String> heats = heatsPeriods.stream()
-            .map(c -> c.getHeatStart() + "/-/" + c.getHeatEnd())
-            .collect(Collectors.toList());
 
     @FXML
     public void initialize() {
 
         genderChoiceBox.setItems(FXCollections.observableList(List.of("PIES", "SUKA")));
 
-        addHeatToListViewButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                HeatModel heatModel = new HeatModel(heatFromDatePicker.getValue(), heatToDatePicker.getValue());
-                heatsPeriods.add(heatModel);
+        addHeatToListViewButton.setOnAction(e -> {
 
+            HeatModel heatModel = new HeatModel(heatFromDatePicker.getValue(), heatToDatePicker.getValue());
+            heatsPeriods.add(heatModel);
 
-                heatsAsListView.setItems(FXCollections.observableList(heats));
+            List<String> heats = heatsPeriods.stream()
+                    .map(c -> c.getHeatStart() + "/-/" + c.getHeatEnd())
+                    .collect(Collectors.toList());
+            heatsAsListView.setItems(FXCollections.observableList(heats));
 
-            }
         });
     }
 
@@ -96,7 +89,10 @@ public class LayoutWithEditingOptionsController {
         List<String> heatDates = new ArrayList<>();
         if (dogModel.getHeats() == null) {
         } else {
-           heatsAsListView.setItems(FXCollections.observableList(heats));
+            List<String> heats = heatsPeriods.stream()
+                    .map(c -> c.getHeatStart() + "/-/" + c.getHeatEnd())
+                    .collect(Collectors.toList());
+            heatsAsListView.setItems(FXCollections.observableList(heats));
         }
 
         this.dogModel = dogModel;
