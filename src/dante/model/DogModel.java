@@ -141,4 +141,20 @@ public class DogModel {
     public void setViralVaccinations(List<LocalDate> viralVaccinations) {
         this.viralVaccinations = viralVaccinations;
     }
+
+    @Override
+    public String toString() {
+        return "DogModel{" +
+                "name=" + name +
+                ", sex=" + sex +
+                ", breed=" + breed +
+                ", coat=" + coat +
+                ", rabiesVaccinations=" + rabiesVaccinations +
+                ", viralVaccinations=" + viralVaccinations +
+                ", litters=" + litters +
+                ", surgicalProcedures=" + surgicalProcedures +
+                ", heats=" + heats +
+                ", birthday=" + birthday +
+                '}';
+    }
 }

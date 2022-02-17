@@ -107,7 +107,8 @@ public class LayoutWithEditingOptionsController {
         genderChoiceBox.setItems(FXCollections.observableList(List.of(Gender.values())));
         breedField.setText(dogModel.getBreed());
         coatField.setText(dogModel.getCoat());
-        birthdayDatepicker.setChronology(dogModel.getBirthday().getChronology());
+        birthdayDatepicker.setValue(dogModel.getBirthday());
+//        birthdayDatepicker.setChronology(dogModel.getBirthday().getChronology());
 //        birthdayField.setText(dogModel.getBirthday());
 //        rabiesVaccinations.setItems(FXCollections.observableArrayList(dogModel.getRabiesVaccinations()));
         littersArea.setText(dogModel.getLitters());
@@ -142,6 +143,8 @@ public class LayoutWithEditingOptionsController {
         dogModel.setSurgicalProcedures(surgicalArea.getText());
         dogModel.setHeats(stringUtil.concatListContent(heatsPeriodList));
 
+
+        System.out.println(dogModel.toString());
         clickedOk = true;
         if (closeCondition) {
             editStage.close();
