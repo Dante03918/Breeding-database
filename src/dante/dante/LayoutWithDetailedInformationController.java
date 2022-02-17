@@ -1,14 +1,11 @@
 package dante;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import dante.model.DogModel;
 
-import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 import java.util.stream.Collectors;
 
 public class LayoutWithDetailedInformationController {
@@ -17,9 +14,6 @@ public class LayoutWithDetailedInformationController {
     private TableView<DogModel> dogsCollection;
     @FXML
     private TableColumn<DogModel, String> nameColumn;
-
-//    @FXML
-//    private ChoiceBox genderChoiceBox;
     @FXML
     private Label breedLabel;
     @FXML
@@ -41,20 +35,17 @@ public class LayoutWithDetailedInformationController {
     @FXML
     private TextArea textArea;
 
-
     private String vaccinationsString;
     private String littersString;
     private String surgicalProceduresString;
-    private String heatString;
     private String sex;
     private String otherVaccinationsString;
 
-    private DogModel modelRefference;
+    private DogModel modelReference;
     private dante.Main main;
     private DogModel selectedItem;
 
     DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
 
     @FXML
     private void initialize() {
@@ -63,59 +54,64 @@ public class LayoutWithDetailedInformationController {
         dogsCollection.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 showDogDetails(newValue);
-                newValue.toString();
             }
         });
         rabiesVaccinationsButton.selectedProperty().addListener((observable, oldValue, newValue) -> {
             selectedItem = dogsCollection.getSelectionModel().getSelectedItem();
-            if(selectedItemValidate(selectedItem)) {
+            if (selectedItemValidate(selectedItem)) {
 
                 if (newValue) {
 
-                textArea.setText(vaccinationsString);
-            }}
+                    textArea.setText(vaccinationsString);
+                }
+            }
         });
         heatButton.selectedProperty().addListener((observable, oldValue, newValue) -> {
             selectedItem = dogsCollection.getSelectionModel().getSelectedItem();
-            if(selectedItemValidate(selectedItem)) {
+            if (selectedItemValidate(selectedItem)) {
 
                 if (newValue) {
-                if(sex != null && sex.equals("pies")){
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Wskazówka");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Pies jest tak skonstruowany, że nie posiada cieczki ;)");
-                    alert.showAndWait();
-                }else {
-                   textArea.setText(modelRefference.getHeats().stream()
-                           .map(c-> c.getHeatStart() + "/-/" + c.getHeatEnd()).collect(Collectors.joining()));
+                    if (sex != null && sex.equals("PIES")) {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Wskazówka");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Pies jest tak skonstruowany, że nie posiada cieczki ;)");
+                        alert.showAndWait();
+                    } else {
+                        textArea.setText(modelReference.getHeats().stream()
+                                .map(c -> c.getHeatStart() + "/-/" + c.getHeatEnd()).collect(Collectors.joining()));
+                    }
                 }
-            }}
+            }
         });
         littersButton.selectedProperty().addListener((observable, oldValue, newValue) -> {
             selectedItem = dogsCollection.getSelectionModel().getSelectedItem();
-            if(selectedItemValidate(selectedItem)) {
+            if (selectedItemValidate(selectedItem)) {
 
                 if (newValue) {
                     textArea.setText(littersString);
                     System.out.println("Mioty");
+                }
             }
-        }});
+        });
         surgicalProceduresButton.selectedProperty().addListener((observable, oldValue, newValue) -> {
             selectedItem = dogsCollection.getSelectionModel().getSelectedItem();
-            if(selectedItemValidate(selectedItem)) {
+            if (selectedItemValidate(selectedItem)) {
 
                 if (newValue) {
-                textArea.setText(surgicalProceduresString);
-                System.out.println("Zabiegi");                }
-        }});
+                    textArea.setText(surgicalProceduresString);
+                }
+            }
+        });
         otherVaccinations.selectedProperty().addListener((observable, oldValue, newValue) -> {
             selectedItem = dogsCollection.getSelectionModel().getSelectedItem();
-            if(selectedItemValidate(selectedItem)) {
+            if (selectedItemValidate(selectedItem)) {
 
                 textArea.setText(otherVaccinationsString);
-        }});
+            }
+        });
     }
+
     public void setMain(dante.Main main) {
         this.main = main;
 
@@ -123,8 +119,6 @@ public class LayoutWithDetailedInformationController {
     }
 
     public void showDogDetails(DogModel dogModel) {
-
-
 
 
         if (dogModel != null) {
@@ -151,9 +145,8 @@ public class LayoutWithDetailedInformationController {
                     .map(date -> date.format(dateTimeFormatter))
                     .collect(Collectors.joining());
 
-            modelRefference = dogModel;
+            modelReference = dogModel;
         } else {
-//            sexLabel.setText("");
             breedLabel.setText("");
             coatLabel.setText("");
             textArea.setText("");
@@ -162,32 +155,35 @@ public class LayoutWithDetailedInformationController {
     }
 
     @FXML
-    public void newButtonHandle(){
+    public void newButtonHandle() {
         DogModel dogModel = new DogModel();
         boolean clickedOk = main.showEditLayout(dogModel);
 
-        if(clickedOk){
+        if (clickedOk) {
             main.getDogModelObservableList().add(dogModel);
         }
     }
+
     @FXML
-    public void editButtonHandle(){
-         selectedItem = dogsCollection.getSelectionModel().getSelectedItem();
-    if(selectedItemValidate(selectedItem)) {
-        boolean clickedOk = main.showEditLayout(selectedItem);
-        if (clickedOk) {
-            showDogDetails(selectedItem);
+    public void editButtonHandle() {
+        selectedItem = dogsCollection.getSelectionModel().getSelectedItem();
+        if (selectedItemValidate(selectedItem)) {
+            boolean clickedOk = main.showEditLayout(selectedItem);
+            if (clickedOk) {
+                showDogDetails(selectedItem);
+            }
         }
     }
-    }
+
     @FXML
-    public void deleteButtonHandle(){
+    public void deleteButtonHandle() {
         int selectedItem = dogsCollection.getSelectionModel().getSelectedIndex();
         dogsCollection.getItems().remove(selectedItem);
     }
-    public boolean selectedItemValidate(DogModel selectedItem){
+
+    public boolean selectedItemValidate(DogModel selectedItem) {
         boolean condition;
-        if(selectedItem != null){
+        if (selectedItem != null) {
             condition = true;
         } else {
             condition = false;
