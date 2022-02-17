@@ -2,9 +2,13 @@ package dante;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import dante.model.DogModel;
+
+
+import java.util.List;
 
 public class LayoutWithDetailedInformationController {
 
@@ -13,8 +17,8 @@ public class LayoutWithDetailedInformationController {
     @FXML
     private TableColumn<DogModel, String> nameColumn;
 
-    @FXML
-    private Label sexLabel;
+//    @FXML
+//    private ChoiceBox genderChoiceBox;
     @FXML
     private Label breedLabel;
     @FXML
@@ -34,6 +38,7 @@ public class LayoutWithDetailedInformationController {
     @FXML
     private TextArea textArea;
 
+
     private String vaccinationsString;
     private String littersString;
     private String surgicalProceduresString;
@@ -42,7 +47,7 @@ public class LayoutWithDetailedInformationController {
     private String otherVaccinationsString;
 
     private DogModel modelRefference;
-    private Main main;
+    private dante.Main main;
     private DogModel selectedItem;
 
 
@@ -122,7 +127,7 @@ public class LayoutWithDetailedInformationController {
             }}
         });
     }
-    public void setMain(Main main) {
+    public void setMain(dante.Main main) {
         this.main = main;
 
         dogsCollection.setItems(main.getDogModelObservableList());
@@ -138,7 +143,7 @@ public class LayoutWithDetailedInformationController {
 
             textArea.setText("");
 
-            sexLabel.setText(dogModel.getSex());
+//            sexLabel.setText(dogModel.getSex());
             breedLabel.setText(dogModel.getBreed());
             coatLabel.setText(dogModel.getCoat());
             birthdayLabel.setText(dogModel.getBirthday());
@@ -151,7 +156,7 @@ public class LayoutWithDetailedInformationController {
 
             modelRefference = dogModel;
         } else {
-            sexLabel.setText("");
+//            sexLabel.setText("");
             breedLabel.setText("");
             coatLabel.setText("");
             textArea.setText("");
@@ -163,6 +168,8 @@ public class LayoutWithDetailedInformationController {
     public void newButtonHandle(){
         DogModel dogModel = new DogModel();
         boolean clickedOk = main.showEditLayout(dogModel);
+
+//        genderChoiceBox.setItems(FXCollections.observableList(List.of("PIES", "SUKA")));
         if(clickedOk){
             main.getDogModelObservableList().add(dogModel);
         }

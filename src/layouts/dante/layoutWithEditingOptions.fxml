@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -33,7 +34,6 @@
         </rowConstraints>
          <children>
             <TextField fx:id="nameField" GridPane.columnIndex="1" />
-            <TextField fx:id="sexField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="breedField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="coatField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextArea fx:id="littersArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
@@ -52,6 +52,7 @@
             <TextField fx:id="birthdayField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <ListView fx:id="heatsAsListView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
             <ListView fx:id="rabiesListView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <ChoiceBox fx:id="genderChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
       <Label layoutX="203.0" layoutY="14.0" text="Okno edycji">

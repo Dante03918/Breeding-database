@@ -48,6 +48,8 @@ public class LayoutWithEditingOptionsController {
     private Button addHeatToListViewButton;
     @FXML
     private Button addRabiesVaccDateToList;
+    @FXML
+    private ChoiceBox genderChoiceBox;
 
     private Stage editStage;
     private DogModel dogModel;
@@ -62,6 +64,9 @@ public class LayoutWithEditingOptionsController {
     ObservableList<String> listViewItems = FXCollections.observableArrayList();
     @FXML
     public  void initialize(){
+
+        genderChoiceBox.setItems(FXCollections.observableList(List.of("PIES", "SUKA")));
+
         addHeatToListViewButton.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle (ActionEvent e){
@@ -93,7 +98,7 @@ public class LayoutWithEditingOptionsController {
         this.dogModel = dogModel;
 
         nameField.setText(dogModel.getName());
-        sexField.setText(dogModel.getSex());
+//        sexField.setText(dogModel.getSex());
         breedField.setText(dogModel.getBreed());
         coatField.setText(dogModel.getCoat());
         birthdayField.setText(dogModel.getBirthday());

@@ -66,7 +66,7 @@ public class Main extends Application {
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
 
-            RootLayoutController controller = loader.getController();
+            dante.RootLayoutController controller = loader.getController();
             controller.setRefference(this);
 
             primaryStage.show();
@@ -83,7 +83,7 @@ public class Main extends Application {
 
             rootLayout.setCenter(anchorPane);
 
-            LayoutWithDetailedInformationController controller = loader.getController();
+            dante.LayoutWithDetailedInformationController controller = loader.getController();
             controller.setMain(this);
 
             autoLoadLastOpenedFile();
@@ -106,7 +106,7 @@ public class Main extends Application {
                 Scene scene = new Scene(pane);
                 editStage.setScene(scene);
 
-            LayoutWithEditingOptionsController controller = loader.getController();
+            dante.LayoutWithEditingOptionsController controller = loader.getController();
             controller.setDialogStage(editStage);
             controller.setDogModel(dogModel);
 
@@ -210,28 +210,28 @@ public class Main extends Application {
 
        DateUtil dateUtil = new DateUtil();
 
-       dateUtil.setMonths(12);
+//       dateUtil.setMonths(12);
 
        for(DogModel model : dogModelObservableList){
-          dateUtil.extractDateFromString(model.getName(), model.getRabiesVaccinations());
+//          dateUtil.extractDateFromString(model.getName(), model.getRabiesVaccinations());
           //dateUtil.extractDateFromString(model.getName(), model.getOtherVaccinations());
        }
-       overdueRabiesVaccinationsSet = dateUtil.overdueVaccinationList;
-       monthBeforeRabiesVaccinationExpireDateSet = dateUtil.monthBeforeVaccinationExpireDateList;
+//       overdueRabiesVaccinationsSet = dateUtil.overdueVaccinationList;
+//       monthBeforeRabiesVaccinationExpireDateSet = dateUtil.monthBeforeVaccinationExpireDateList;
    }
     public void retrieveOtherVaccinationDates(){
 
         DateUtil dateUtil = new DateUtil();
 
-        dateUtil.setMonths(24);
+//        dateUtil.setMonths(24);
 
 
         for(DogModel model : dogModelObservableList){
             //dateUtil.extractDateFromString(model.getName(), model.getRabiesVaccinations());
-            dateUtil.extractDateFromString(model.getName(), model.getOtherVaccinations());
+//            dateUtil.extractDateFromString(model.getName(), model.getOtherVaccinations());
         }
-        overdueOtherVaccinationsSet = dateUtil.overdueVaccinationList;
-        monthBeforeOtherVaccinationExpireDateSet = dateUtil.monthBeforeVaccinationExpireDateList;
+//        overdueOtherVaccinationsSet = dateUtil.overdueVaccinationList;
+//        monthBeforeOtherVaccinationExpireDateSet = dateUtil.monthBeforeVaccinationExpireDateList;
     }
 //    public String buildStringFromList(Set<String> collection){
 //
