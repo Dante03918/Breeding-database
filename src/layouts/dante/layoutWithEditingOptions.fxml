@@ -38,7 +38,6 @@
             <TextField fx:id="coatField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextArea fx:id="littersArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <TextArea fx:id="surgicalArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <TextArea fx:id="otherVaccinationArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
             <Label text="Imie" textAlignment="CENTER" />
             <Label text="Płeć" GridPane.rowIndex="1" />
             <Label text="Rasa" GridPane.rowIndex="2" />
@@ -53,6 +52,7 @@
             <ListView fx:id="rabiesListView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <ChoiceBox fx:id="genderChoiceBox" prefHeight="25.0" prefWidth="189.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <DatePicker fx:id="birthdayDatepicker" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <ListView fx:id="viralVaccListView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
          </children>
       </GridPane>
       <Label layoutX="203.0" layoutY="14.0" text="Okno edycji">
@@ -67,5 +67,7 @@
       <Button fx:id="addHeatToListViewButton" layoutX="452.0" layoutY="366.0" mnemonicParsing="false" text="+" />
       <DatePicker fx:id="rabiesVaccDatePicker" layoutX="326.0" layoutY="213.0" prefWidth="120.0" />
       <Button fx:id="addRabiesVaccDateToList" layoutX="452.0" layoutY="213.0" mnemonicParsing="false" onAction="#addRabiesVaccDateToListButtonHandler" text="+" />
+      <DatePicker fx:id="viralVaccDatePicker" layoutX="326.0" layoutY="415.0" prefWidth="120.0" />
+      <Button fx:id="addViralVaccDateToListView" layoutX="452.0" layoutY="415.0" mnemonicParsing="false" onAction="#addViralVaccDateToListView" text="+" />
    </children>
 </AnchorPane>

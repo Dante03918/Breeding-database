@@ -1,6 +1,7 @@
 package dante;
 
 //import dante.util.DateUtil;
+
 import dante.util.StringUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,7 +14,6 @@ import dante.model.DogModel;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class LayoutWithEditingOptionsController {
@@ -35,7 +35,7 @@ public class LayoutWithEditingOptionsController {
     @FXML
     private TextArea surgicalArea;
     @FXML
-    private TextArea otherVaccinationArea;
+    private ListView viralVaccListView;
     @FXML
     private DatePicker heatFromDatePicker;
     @FXML
@@ -43,33 +43,39 @@ public class LayoutWithEditingOptionsController {
     @FXML
     private DatePicker rabiesVaccDatePicker;
     @FXML
+    private DatePicker viralVaccDatePicker;
+    @FXML
     private ListView heatsAsListView;
     @FXML
     private Button addHeatToListViewButton;
     @FXML
     private Button addRabiesVaccDateToList;
     @FXML
+    private Button addViralVaccDateToListView;
+    @FXML
     private ChoiceBox genderChoiceBox;
 
     private Stage editStage;
     private DogModel dogModel;
     private boolean clickedOk;
-    private List<LocalDate> dates = new ArrayList<>();
+    private List<LocalDate> rabiesVaccDates = new ArrayList<>();
+    private List<LocalDate> viralVaccDates = new ArrayList<>();
 
-     //   DateUtil dateUtil = new DateUtil();
+    //   DateUtil dateUtil = new DateUtil();
     StringUtil stringUtil = new StringUtil();
 
     List<String> heatsPeriodList = new ArrayList<>();
 
     ObservableList<String> listViewItems = FXCollections.observableArrayList();
+
     @FXML
-    public  void initialize(){
+    public void initialize() {
 
         genderChoiceBox.setItems(FXCollections.observableList(List.of("PIES", "SUKA")));
 
-        addHeatToListViewButton.setOnAction(new EventHandler<ActionEvent>(){
+        addHeatToListViewButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle (ActionEvent e){
+            public void handle(ActionEvent e) {
 //                String firstPart = dateUtil.localDateToString(heatFromDatePicker.getValue());
 //                String secondPart = dateUtil.localDateToString(heatToDatePicker.getValue());
 //                heatsPeriodList.add(firstPart +" - "+secondPart);
@@ -80,17 +86,17 @@ public class LayoutWithEditingOptionsController {
         });
     }
 
-    public void setDialogStage(Stage editStage){
+    public void setDialogStage(Stage editStage) {
         this.editStage = editStage;
     }
 
-    public void setDogModel(DogModel dogModel){
+    public void setDogModel(DogModel dogModel) {
 
         List<String> heatDates;
-        if(dogModel.getHeats() == null){
+        if (dogModel.getHeats() == null) {
             heatDates = new ArrayList<>();
             System.out.println("Przypisano nowy obiekt array list");
-        }else{
+        } else {
             System.out.println("wykonano konwersje");
             heatDates = stringUtil.listFromCuttedString(dogModel.getHeats());
         }
@@ -105,22 +111,22 @@ public class LayoutWithEditingOptionsController {
 //        rabiesVaccinations.setItems(FXCollections.observableArrayList(dogModel.getRabiesVaccinations()));
         littersArea.setText(dogModel.getLitters());
         surgicalArea.setText(dogModel.getSurgicalProcedures());
-        otherVaccinationArea.setText(dogModel.getOtherVaccinations());
+//        otherVaccinationArea.setText(dogModel.getOtherVaccinations());
         heatsPeriodList = heatDates;
         listViewItems.addAll(heatDates);
 //        heatsAsListView.setItems(listViewItems);
 
-        for(String s : listViewItems){
+        for (String s : listViewItems) {
             System.out.println(s);
         }
     }
 
-    public boolean isClickedOk(){
+    public boolean isClickedOk() {
         return clickedOk;
     }
 
     @FXML
-    public void okHandle(){
+    public void okHandle() {
 
         boolean closeCondition = true;
 
@@ -142,26 +148,33 @@ public class LayoutWithEditingOptionsController {
 //
 //            closeCondition = false;
 //        }
-        dogModel.setOtherVaccinations(otherVaccinationArea.getText());
+//        dogModel.setOtherVaccinations(otherVaccinationArea.getText());
         dogModel.setCoat(coatField.getText());
         dogModel.setLitters(littersArea.getText());
         dogModel.setSurgicalProcedures(surgicalArea.getText());
         dogModel.setHeats(stringUtil.concatListContent(heatsPeriodList));
 
         clickedOk = true;
-        if(closeCondition) {
+        if (closeCondition) {
             editStage.close();
         }
     }
+
     @FXML
-    public void cancelHandle(){
+    public void cancelHandle() {
         editStage.close();
     }
 
 
     @FXML
-    public void addRabiesVaccDateToListButtonHandler(){
-       dates.add(rabiesVaccDatePicker.getValue());
-        rabiesListView.setItems(FXCollections.observableList(dates));
+    public void addRabiesVaccDateToListButtonHandler() {
+        rabiesVaccDates.add(rabiesVaccDatePicker.getValue());
+        rabiesListView.setItems(FXCollections.observableList(rabiesVaccDates));
+    }
+
+    @FXML
+    public void addViralVaccDateToListView() {
+        viralVaccDates.add(viralVaccDatePicker.getValue());
+        viralVaccListView.setItems(FXCollections.observableList(viralVaccDates));
     }
 }
