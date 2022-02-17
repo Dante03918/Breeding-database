@@ -1,5 +1,5 @@
 package dante.model;
-
+import enums.Gender;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -11,7 +11,7 @@ import java.util.List;
 public class DogModel {
 
     private  StringProperty name;
-    private  StringProperty sex;
+    private  Enum sex;
     private  StringProperty breed;
     private  StringProperty coat;
     private  List<LocalDate> rabiesVaccinations;
@@ -21,19 +21,21 @@ public class DogModel {
     private  StringProperty heats;
     private  LocalDate birthday;
 
-    public DogModel(){
-
+    public DogModel() {
         this.name = new SimpleStringProperty(null);
-        this.sex = new SimpleStringProperty(null);
-
+        this.sex = Gender.PIES;
         this.breed = new SimpleStringProperty(null);
         this.coat = new SimpleStringProperty(null);
         this.rabiesVaccinations = new ArrayList<>();
+        this.viralVaccinations = new ArrayList<>();
         this.litters = new SimpleStringProperty(null);
         this.surgicalProcedures = new SimpleStringProperty(null);
         this.heats = new SimpleStringProperty(null);
-        this.viralVaccinations = new ArrayList<>();
+        this.birthday = LocalDate.now();
     }
+
+
+
 
     public String getHeats() {
         return heats.get();
@@ -59,16 +61,12 @@ public class DogModel {
         this.name.set(name);
     }
 
-    public String getSex() {
-        return sex.get();
-    }
-
-    public StringProperty sexProperty() {
+    public Enum getSex() {
         return sex;
     }
 
-    public void setSex(String sex) {
-        this.sex.set(sex);
+    public void setSex(Enum sex) {
+        this.sex = sex;
     }
 
     public String getBreed() {

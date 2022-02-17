@@ -3,6 +3,7 @@ package dante;
 //import dante.util.DateUtil;
 
 import dante.util.StringUtil;
+import enums.Gender;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -103,8 +104,10 @@ public class LayoutWithEditingOptionsController {
 
         nameField.setText(dogModel.getName());
 //        sexField.setText(dogModel.getSex());
+        genderChoiceBox.setItems(FXCollections.observableList(List.of(Gender.values())));
         breedField.setText(dogModel.getBreed());
         coatField.setText(dogModel.getCoat());
+        birthdayDatepicker.setChronology(dogModel.getBirthday().getChronology());
 //        birthdayField.setText(dogModel.getBirthday());
 //        rabiesVaccinations.setItems(FXCollections.observableArrayList(dogModel.getRabiesVaccinations()));
         littersArea.setText(dogModel.getLitters());
@@ -129,23 +132,10 @@ public class LayoutWithEditingOptionsController {
         boolean closeCondition = true;
 
         dogModel.setName(nameField.getText());
-        dogModel.setSex(genderChoiceBox.getValue().toString());
+        dogModel.setSex((Enum) genderChoiceBox.getValue());
         dogModel.setBreed(breedField.getText());
         dogModel.setBirthday(birthdayDatepicker.getValue());
-//        if(dateUtil.dateValidation(rabiesVaccinationsArea.getText())){
-            dogModel.setRabiesVaccinations(rabiesVaccDates);
-//        } else {
-//            Alert alert = new Alert(Alert.AlertType.WARNING);
-//            alert.setTitle("Coś poszło nie tak");
-//            alert.setHeaderText(null);
-//            alert.setContentText("Któraś z wpisanych dat w polu 'Szczepienia' ma niepoprawny format. \n" +
-//                    "Prawidłowy format daty to 'dd.MM.yyyy'");
-//            alert.showAndWait();
-//
-//            clickedOk = false;
-//
-//            closeCondition = false;
-//        }
+        dogModel.setRabiesVaccinations(rabiesVaccDates);
         dogModel.setViralVaccinations(viralVaccDates);
         dogModel.setCoat(coatField.getText());
         dogModel.setLitters(littersArea.getText());

@@ -147,7 +147,7 @@ public class LayoutWithDetailedInformationController {
 //            vaccinationsString = dogModel.getRabiesVaccinations();
             littersString = dogModel.getLitters();
             surgicalProceduresString = dogModel.getSurgicalProcedures();
-            sex = dogModel.getSex();
+            sex = dogModel.getSex().toString();
 //            otherVaccinationsString = dogModel.getViralVaccinations();
 
             modelRefference = dogModel;
