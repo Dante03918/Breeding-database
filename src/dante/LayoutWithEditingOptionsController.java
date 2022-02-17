@@ -23,8 +23,6 @@ public class LayoutWithEditingOptionsController {
     @FXML
     private TextField nameField;
     @FXML
-    private TextField sexField;
-    @FXML
     private TextField breedField;
     @FXML
     private TextField coatField;
@@ -51,10 +49,6 @@ public class LayoutWithEditingOptionsController {
     @FXML
     private Button addHeatToListViewButton;
     @FXML
-    private Button addRabiesVaccDateToList;
-    @FXML
-    private Button addViralVaccDateToListView;
-    @FXML
     private ChoiceBox genderChoiceBox;
 
     private Stage editStage;
@@ -64,7 +58,6 @@ public class LayoutWithEditingOptionsController {
     private List<LocalDate> viralVaccDates = new ArrayList<>();
     private List<HeatModel> heatsPeriods = new ArrayList<>();
 
-    //   DateUtil dateUtil = new DateUtil();
     StringUtil stringUtil = new StringUtil();
 
     List<String> heatsPeriodList = new ArrayList<>();
@@ -136,11 +129,11 @@ public class LayoutWithEditingOptionsController {
         boolean closeCondition = true;
 
         dogModel.setName(nameField.getText());
-        dogModel.setSex(sexField.getText());
+        dogModel.setSex(genderChoiceBox.getValue().toString());
         dogModel.setBreed(breedField.getText());
-//        dogModel.setBirthday(birthdayField.getText());
+        dogModel.setBirthday(birthdayDatepicker.getValue());
 //        if(dateUtil.dateValidation(rabiesVaccinationsArea.getText())){
-//            dogModel.setRabiesVaccinations(rabiesVaccinationsArea.getText());
+            dogModel.setRabiesVaccinations(rabiesVaccDates);
 //        } else {
 //            Alert alert = new Alert(Alert.AlertType.WARNING);
 //            alert.setTitle("Coś poszło nie tak");
@@ -153,7 +146,7 @@ public class LayoutWithEditingOptionsController {
 //
 //            closeCondition = false;
 //        }
-//        dogModel.setOtherVaccinations(otherVaccinationArea.getText());
+        dogModel.setViralVaccinations(viralVaccDates);
         dogModel.setCoat(coatField.getText());
         dogModel.setLitters(littersArea.getText());
         dogModel.setSurgicalProcedures(surgicalArea.getText());

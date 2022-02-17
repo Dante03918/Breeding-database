@@ -2,13 +2,9 @@ package dante;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import dante.model.DogModel;
-
-
-import java.util.List;
 
 public class LayoutWithDetailedInformationController {
 
@@ -152,7 +148,7 @@ public class LayoutWithDetailedInformationController {
             littersString = dogModel.getLitters();
             surgicalProceduresString = dogModel.getSurgicalProcedures();
             sex = dogModel.getSex();
-            otherVaccinationsString = dogModel.getOtherVaccinations();
+//            otherVaccinationsString = dogModel.getViralVaccinations();
 
             modelRefference = dogModel;
         } else {
