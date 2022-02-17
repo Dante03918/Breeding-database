@@ -86,7 +86,7 @@ public class Main extends Application {
             dante.LayoutWithDetailedInformationController controller = loader.getController();
             controller.setMain(this);
 
-            autoLoadLastOpenedFile();
+//            autoLoadLastOpenedFile();
 
         } catch (IOException e){
             e.printStackTrace();

@@ -27,7 +27,7 @@ public class LayoutWithEditingOptionsController {
     @FXML
     private TextField coatField;
     @FXML
-    private TextField birthdayField;
+    private DatePicker birthdayDatepicker;
     @FXML
     private ListView rabiesListView;
     @FXML
@@ -101,7 +101,7 @@ public class LayoutWithEditingOptionsController {
 //        sexField.setText(dogModel.getSex());
         breedField.setText(dogModel.getBreed());
         coatField.setText(dogModel.getCoat());
-        birthdayField.setText(dogModel.getBirthday());
+//        birthdayField.setText(dogModel.getBirthday());
 //        rabiesVaccinations.setItems(FXCollections.observableArrayList(dogModel.getRabiesVaccinations()));
         littersArea.setText(dogModel.getLitters());
         surgicalArea.setText(dogModel.getSurgicalProcedures());
@@ -127,7 +127,7 @@ public class LayoutWithEditingOptionsController {
         dogModel.setName(nameField.getText());
         dogModel.setSex(sexField.getText());
         dogModel.setBreed(breedField.getText());
-        dogModel.setBirthday(birthdayField.getText());
+//        dogModel.setBirthday(birthdayField.getText());
 //        if(dateUtil.dateValidation(rabiesVaccinationsArea.getText())){
 //            dogModel.setRabiesVaccinations(rabiesVaccinationsArea.getText());
 //        } else {

@@ -49,10 +49,10 @@
             <Label text="Zabiegi chirurgiczne" GridPane.rowIndex="7" />
             <Label text="Cieczki" GridPane.rowIndex="8" />
             <Label text="Wirusówki" GridPane.rowIndex="9" />
-            <TextField fx:id="birthdayField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <ListView fx:id="heatsAsListView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
             <ListView fx:id="rabiesListView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <ChoiceBox fx:id="genderChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ChoiceBox fx:id="genderChoiceBox" prefHeight="25.0" prefWidth="189.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <DatePicker fx:id="birthdayDatepicker" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
       </GridPane>
       <Label layoutX="203.0" layoutY="14.0" text="Okno edycji">

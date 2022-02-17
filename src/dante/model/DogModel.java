@@ -24,7 +24,7 @@ public class DogModel {
     private  StringProperty litters;
     private  StringProperty surgicalProcedures;
     private  StringProperty heats;
-    private  StringProperty birthday;
+    private  LocalDate birthday;
 
     public DogModel(){
 
@@ -37,7 +37,6 @@ public class DogModel {
         this.litters = new SimpleStringProperty(null);
         this.surgicalProcedures = new SimpleStringProperty(null);
         this.heats = new SimpleStringProperty(null);
-        this.birthday = new SimpleStringProperty(null);
         this.otherVaccinations = new SimpleStringProperty(null);
     }
 
@@ -134,18 +133,12 @@ public class DogModel {
     }
 
 
-
-
-    public void setBirthday(String birthday) {
-        this.birthday.set(birthday);
-    }
-
-    public StringProperty getBirthdayProperty(){
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public String getBirthday(){
-        return birthday.get();
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
     }
 
     public String getOtherVaccinations() {
