@@ -1,5 +1,6 @@
-package dante;
+package controllers;
 
+import dante.Main;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
@@ -12,7 +13,7 @@ public class RootLayoutController {
 
    private Main main;
 
-    public void setRefference(Main main){
+    public void setReference(Main main){
         this.main = main;
     }
 

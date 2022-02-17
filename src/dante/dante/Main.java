@@ -1,6 +1,8 @@
 package dante;
 
-import dante.util.DateUtil;
+import controllers.LayoutWithDetailedInformationController;
+import controllers.LayoutWithEditingOptionsController;
+import controllers.RootLayoutController;
 import dante.util.StringUtil;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -31,10 +33,10 @@ public class Main extends Application {
 
    public ObservableList<DogModel> dogModelObservableList = FXCollections.observableArrayList();
 
-   private Set<String> overdueRabiesVaccinationsSet = new HashSet<>();
-    private Set<String> monthBeforeRabiesVaccinationExpireDateSet = new HashSet<>();
-    private Set<String> overdueOtherVaccinationsSet = new HashSet<>();
-    private Set<String> monthBeforeOtherVaccinationExpireDateSet = new HashSet<>();
+    private final Set<String> overdueRabiesVaccinationsSet = new HashSet<>();
+    private final Set<String> monthBeforeRabiesVaccinationExpireDateSet = new HashSet<>();
+    private final Set<String> overdueOtherVaccinationsSet = new HashSet<>();
+    private final Set<String> monthBeforeOtherVaccinationExpireDateSet = new HashSet<>();
 
     public String contentForAlert = "";
    public String overdueVaccinationsFieldContent = "";
@@ -46,7 +48,7 @@ public class Main extends Application {
        return dogModelObservableList;
    }
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage){
 
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Informacje hodowlane");
@@ -61,13 +63,13 @@ public class Main extends Application {
         try{
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("rootLayout.fxml"));
-            rootLayout = (BorderPane) loader.load();
+            rootLayout = loader.load();
 
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
 
-            dante.RootLayoutController controller = loader.getController();
-            controller.setRefference(this);
+            RootLayoutController controller = loader.getController();
+            controller.setReference(this);
 
             primaryStage.show();
 
@@ -79,11 +81,11 @@ public class Main extends Application {
         try{
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("layoutWithDetailedInformation.fxml"));
-            AnchorPane anchorPane = (AnchorPane) loader.load();
+            AnchorPane anchorPane = loader.load();
 
             rootLayout.setCenter(anchorPane);
 
-            dante.LayoutWithDetailedInformationController controller = loader.getController();
+            LayoutWithDetailedInformationController controller = loader.getController();
             controller.setMain(this);
 
 //            autoLoadLastOpenedFile();
@@ -96,7 +98,7 @@ public class Main extends Application {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("layoutWithEditingOptions.fxml"));
-            AnchorPane pane = (AnchorPane) loader.load();
+            AnchorPane pane = loader.load();
 
 
             Stage editStage = new Stage();
@@ -106,7 +108,7 @@ public class Main extends Application {
                 Scene scene = new Scene(pane);
                 editStage.setScene(scene);
 
-            dante.LayoutWithEditingOptionsController controller = loader.getController();
+            LayoutWithEditingOptionsController controller = loader.getController();
             controller.setDialogStage(editStage);
             controller.setDogModel(dogModel);
 
@@ -118,29 +120,29 @@ public class Main extends Application {
         }
     }
 
-    public void autoLoadLastOpenedFile(){
-        Preferences preferences = Preferences.userNodeForPackage(Main.class);
-        File file = null;
-        try{
-        file = new File(preferences.get("filePath",null));
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-        if(preferences.get("filePath",null) != null){
-            try {
-                loadDataFromFile(file);
-                setFilePathToDogCollectionFile(file);
-
-            } catch (NullPointerException e){
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
-                alert.setContentText("Nie znaleziono pliku fxml");
-
-                alert.showAndWait();
-            }
-        }
-    }
+//    public void autoLoadLastOpenedFile(){
+//        Preferences preferences = Preferences.userNodeForPackage(Main.class);
+//        File file = null;
+//        try{
+//        file = new File(preferences.get("filePath",null));
+//        } catch (Exception e){
+//            e.printStackTrace();
+//        }
+//        if(preferences.get("filePath",null) != null){
+//            try {
+//                loadDataFromFile(file);
+//                setFilePathToDogCollectionFile(file);
+//
+//            } catch (NullPointerException e){
+//                Alert alert = new Alert(Alert.AlertType.ERROR);
+//                alert.setTitle("Error");
+//                alert.setHeaderText(null);
+//                alert.setContentText("Nie znaleziono pliku fxml");
+//
+//                alert.showAndWait();
+//            }
+//        }
+//    }
     public void loadDataFromFile(File file) {
         try {
             JAXBContext context = JAXBContext.newInstance(DogCollectionWrapper.class);
@@ -208,28 +210,24 @@ public class Main extends Application {
    }
    public void retrieveRabiesVaccinationDates(){
 
-       DateUtil dateUtil = new DateUtil();
-
 //       dateUtil.setMonths(12);
 
-       for(DogModel model : dogModelObservableList){
+//       for(DogModel model : dogModelObservableList){
 //          dateUtil.extractDateFromString(model.getName(), model.getRabiesVaccinations());
           //dateUtil.extractDateFromString(model.getName(), model.getOtherVaccinations());
-       }
+//       }
 //       overdueRabiesVaccinationsSet = dateUtil.overdueVaccinationList;
 //       monthBeforeRabiesVaccinationExpireDateSet = dateUtil.monthBeforeVaccinationExpireDateList;
    }
     public void retrieveOtherVaccinationDates(){
 
-        DateUtil dateUtil = new DateUtil();
-
 //        dateUtil.setMonths(24);
 
 
-        for(DogModel model : dogModelObservableList){
+//        for(DogModel model : dogModelObservableList){
             //dateUtil.extractDateFromString(model.getName(), model.getRabiesVaccinations());
 //            dateUtil.extractDateFromString(model.getName(), model.getOtherVaccinations());
-        }
+//        }
 //        overdueOtherVaccinationsSet = dateUtil.overdueVaccinationList;
 //        monthBeforeOtherVaccinationExpireDateSet = dateUtil.monthBeforeVaccinationExpireDateList;
     }
