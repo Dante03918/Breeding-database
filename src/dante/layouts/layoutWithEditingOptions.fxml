@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="503.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dante.LayoutWithEditingOptionsController">
+<AnchorPane prefHeight="503.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dante.LayoutWithEditingOptionsController">
    <children>
       <GridPane layoutX="211.0" layoutY="74.0" prefHeight="402.0" prefWidth="305.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="185.0" AnchorPane.topAnchor="50.0">
         <columnConstraints>
@@ -36,7 +36,6 @@
             <TextField fx:id="sexField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="breedField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="coatField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextArea fx:id="rabiesVaccinationsArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <TextArea fx:id="littersArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <TextArea fx:id="surgicalArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
             <TextArea fx:id="otherVaccinationArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
@@ -52,6 +51,7 @@
             <Label text="Wirusówki" GridPane.rowIndex="9" />
             <TextField fx:id="birthdayField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <ListView fx:id="heatsAsListView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <ListView fx:id="rabiesListView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
       </GridPane>
       <Label layoutX="203.0" layoutY="14.0" text="Okno edycji">
@@ -64,5 +64,7 @@
       <DatePicker fx:id="heatFromDatePicker" layoutX="326.0" layoutY="353.0" prefWidth="120.0" />
       <DatePicker fx:id="heatToDatePicker" layoutX="326.0" layoutY="378.0" prefWidth="120.0" />
       <Button fx:id="addHeatToListViewButton" layoutX="452.0" layoutY="366.0" mnemonicParsing="false" text="+" />
+      <DatePicker fx:id="rabiesVaccDatePicker" layoutX="326.0" layoutY="213.0" prefWidth="120.0" />
+      <Button fx:id="addRabiesVaccDateToList" layoutX="452.0" layoutY="213.0" mnemonicParsing="false" onAction="#addRabiesVaccDateToListButtonHandler" text="+" />
    </children>
 </AnchorPane>

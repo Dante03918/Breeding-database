@@ -1,7 +1,17 @@
 package dante.model;
 
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import javax.xml.bind.annotation.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class DogModel {
 
@@ -9,7 +19,7 @@ public class DogModel {
     private  StringProperty sex;
     private  StringProperty breed;
     private  StringProperty coat;
-    private  StringProperty rabiesVaccinations;
+    private  List<LocalDate> rabiesVaccinations;
     private  StringProperty otherVaccinations;
     private  StringProperty litters;
     private  StringProperty surgicalProcedures;
@@ -23,7 +33,7 @@ public class DogModel {
 
         this.breed = new SimpleStringProperty(null);
         this.coat = new SimpleStringProperty(null);
-        this.rabiesVaccinations = new SimpleStringProperty(null);
+        this.rabiesVaccinations = new ArrayList<>();
         this.litters = new SimpleStringProperty(null);
         this.surgicalProcedures = new SimpleStringProperty(null);
         this.heats = new SimpleStringProperty(null);
@@ -91,16 +101,12 @@ public class DogModel {
         this.coat.set(coat);
     }
 
-    public String getRabiesVaccinations() {
-        return rabiesVaccinations.get();
-    }
-
-    public StringProperty rabiesVaccinationsProperty() {
+    public List<LocalDate> getRabiesVaccinations() {
         return rabiesVaccinations;
     }
 
-    public void setRabiesVaccinations(String rabiesVaccinations) {
-        this.rabiesVaccinations.set(rabiesVaccinations);
+    public void setRabiesVaccinations(List<LocalDate> rabiesVaccinations) {
+        this.rabiesVaccinations = rabiesVaccinations;
     }
 
     public String getLitters() {

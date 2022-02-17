@@ -143,7 +143,7 @@ public class LayoutWithDetailedInformationController {
             coatLabel.setText(dogModel.getCoat());
             birthdayLabel.setText(dogModel.getBirthday());
 
-            vaccinationsString = dogModel.getRabiesVaccinations();
+//            vaccinationsString = dogModel.getRabiesVaccinations();
             littersString = dogModel.getLitters();
             surgicalProceduresString = dogModel.getSurgicalProcedures();
             sex = dogModel.getSex();
