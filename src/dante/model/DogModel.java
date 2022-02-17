@@ -2,6 +2,7 @@ package dante.model;
 import enums.Gender;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import model.HeatModel;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class DogModel {
     private  List<LocalDate> viralVaccinations;
     private  StringProperty litters;
     private  StringProperty surgicalProcedures;
-    private  StringProperty heats;
+    private  List<HeatModel> heats;
     private  LocalDate birthday;
 
     public DogModel() {
@@ -30,23 +31,17 @@ public class DogModel {
         this.viralVaccinations = new ArrayList<>();
         this.litters = new SimpleStringProperty(null);
         this.surgicalProcedures = new SimpleStringProperty(null);
-        this.heats = new SimpleStringProperty(null);
+        this.heats = new ArrayList<>();
         this.birthday = LocalDate.now();
     }
 
 
-
-
-    public String getHeats() {
-        return heats.get();
-    }
-
-    public StringProperty heatsProperty() {
+    public List<HeatModel> getHeats() {
         return heats;
     }
 
-    public void setHeats(String heats) {
-        this.heats.set(heats);
+    public void setHeats(List<HeatModel> heats) {
+        this.heats = heats;
     }
 
     public String getName() {

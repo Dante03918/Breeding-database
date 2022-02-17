@@ -30,13 +30,13 @@ public class LayoutWithEditingOptionsController {
     @FXML
     private DatePicker birthdayDatepicker;
     @FXML
-    private ListView rabiesListView;
+    private ListView<LocalDate> rabiesListView;
     @FXML
     private TextArea littersArea;
     @FXML
     private TextArea surgicalArea;
     @FXML
-    private ListView viralVaccListView;
+    private ListView<LocalDate> viralVaccListView;
     @FXML
     private DatePicker heatFromDatePicker;
     @FXML
@@ -46,7 +46,7 @@ public class LayoutWithEditingOptionsController {
     @FXML
     private DatePicker viralVaccDatePicker;
     @FXML
-    private ListView heatsAsListView;
+    private ListView<String> heatsAsListView;
     @FXML
     private Button addHeatToListViewButton;
     @FXML
@@ -55,15 +55,19 @@ public class LayoutWithEditingOptionsController {
     private Stage editStage;
     private DogModel dogModel;
     private boolean clickedOk;
-    private List<LocalDate> rabiesVaccDates = new ArrayList<>();
-    private List<LocalDate> viralVaccDates = new ArrayList<>();
-    private List<HeatModel> heatsPeriods = new ArrayList<>();
+    private final List<LocalDate> rabiesVaccDates = new ArrayList<>();
+    private final List<LocalDate> viralVaccDates = new ArrayList<>();
+    private final List<HeatModel> heatsPeriods = new ArrayList<>();
 
     StringUtil stringUtil = new StringUtil();
 
     List<String> heatsPeriodList = new ArrayList<>();
 
     ObservableList<String> listViewItems = FXCollections.observableArrayList();
+
+    List<String> heats = heatsPeriods.stream()
+            .map(c -> c.getHeatStart() + "/-/" + c.getHeatEnd())
+            .collect(Collectors.toList());
 
     @FXML
     public void initialize() {
@@ -75,9 +79,7 @@ public class LayoutWithEditingOptionsController {
             public void handle(ActionEvent e) {
                 HeatModel heatModel = new HeatModel(heatFromDatePicker.getValue(), heatToDatePicker.getValue());
                 heatsPeriods.add(heatModel);
-                List<String> heats = heatsPeriods.stream()
-                        .map(c -> c.getHeatStart() + "/-/" + c.getHeatEnd())
-                        .collect(Collectors.toList());
+
 
                 heatsAsListView.setItems(FXCollections.observableList(heats));
 
@@ -91,32 +93,23 @@ public class LayoutWithEditingOptionsController {
 
     public void setDogModel(DogModel dogModel) {
 
-        List<String> heatDates;
+        List<String> heatDates = new ArrayList<>();
         if (dogModel.getHeats() == null) {
-            heatDates = new ArrayList<>();
-            System.out.println("Przypisano nowy obiekt array list");
         } else {
-            System.out.println("wykonano konwersje");
-            heatDates = stringUtil.listFromCuttedString(dogModel.getHeats());
+           heatsAsListView.setItems(FXCollections.observableList(heats));
         }
 
         this.dogModel = dogModel;
 
         nameField.setText(dogModel.getName());
-//        sexField.setText(dogModel.getSex());
         genderChoiceBox.setItems(FXCollections.observableList(List.of(Gender.values())));
         breedField.setText(dogModel.getBreed());
         coatField.setText(dogModel.getCoat());
         birthdayDatepicker.setValue(dogModel.getBirthday());
-//        birthdayDatepicker.setChronology(dogModel.getBirthday().getChronology());
-//        birthdayField.setText(dogModel.getBirthday());
-//        rabiesVaccinations.setItems(FXCollections.observableArrayList(dogModel.getRabiesVaccinations()));
         littersArea.setText(dogModel.getLitters());
         surgicalArea.setText(dogModel.getSurgicalProcedures());
-//        otherVaccinationArea.setText(dogModel.getOtherVaccinations());
         heatsPeriodList = heatDates;
         listViewItems.addAll(heatDates);
-//        heatsAsListView.setItems(listViewItems);
 
         for (String s : listViewItems) {
             System.out.println(s);
@@ -130,8 +123,6 @@ public class LayoutWithEditingOptionsController {
     @FXML
     public void okHandle() {
 
-        boolean closeCondition = true;
-
         dogModel.setName(nameField.getText());
         dogModel.setSex((Enum) genderChoiceBox.getValue());
         dogModel.setBreed(breedField.getText());
@@ -141,14 +132,12 @@ public class LayoutWithEditingOptionsController {
         dogModel.setCoat(coatField.getText());
         dogModel.setLitters(littersArea.getText());
         dogModel.setSurgicalProcedures(surgicalArea.getText());
-        dogModel.setHeats(stringUtil.concatListContent(heatsPeriodList));
+        dogModel.setHeats(heatsPeriods);
 
-
-        System.out.println(dogModel.toString());
         clickedOk = true;
-        if (closeCondition) {
-            editStage.close();
-        }
+
+        editStage.close();
+
     }
 
     @FXML

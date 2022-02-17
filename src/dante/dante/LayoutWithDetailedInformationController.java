@@ -6,6 +6,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import dante.model.DogModel;
 
+import java.util.stream.Collectors;
+
 public class LayoutWithDetailedInformationController {
 
     @FXML
@@ -85,7 +87,8 @@ public class LayoutWithDetailedInformationController {
                         alert.setContentText("Pies jest tak skonstruowany, że nie posiada cieczki ;)");
                         alert.showAndWait();
                     }else {
-                       textArea.setText(modelRefference.getHeats());
+                       textArea.setText(modelRefference.getHeats().stream()
+                               .map(c-> c.getHeatStart() + "/-/" + c.getHeatEnd()).collect(Collectors.joining()));
                     }
                 }}
             }
