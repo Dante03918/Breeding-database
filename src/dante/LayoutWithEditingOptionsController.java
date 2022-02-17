@@ -11,10 +11,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import dante.model.DogModel;
+import model.HeatModel;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class LayoutWithEditingOptionsController {
 
@@ -60,6 +62,7 @@ public class LayoutWithEditingOptionsController {
     private boolean clickedOk;
     private List<LocalDate> rabiesVaccDates = new ArrayList<>();
     private List<LocalDate> viralVaccDates = new ArrayList<>();
+    private List<HeatModel> heatsPeriods = new ArrayList<>();
 
     //   DateUtil dateUtil = new DateUtil();
     StringUtil stringUtil = new StringUtil();
@@ -76,12 +79,14 @@ public class LayoutWithEditingOptionsController {
         addHeatToListViewButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-//                String firstPart = dateUtil.localDateToString(heatFromDatePicker.getValue());
-//                String secondPart = dateUtil.localDateToString(heatToDatePicker.getValue());
-//                heatsPeriodList.add(firstPart +" - "+secondPart);
-//                listViewItems.add(firstPart +" - "+secondPart);
+                HeatModel heatModel = new HeatModel(heatFromDatePicker.getValue(), heatToDatePicker.getValue());
+                heatsPeriods.add(heatModel);
+                List<String> heats = heatsPeriods.stream()
+                        .map(c -> c.getHeatStart() + "/-/" + c.getHeatEnd())
+                        .collect(Collectors.toList());
 
-                heatsAsListView.setItems(listViewItems);
+                heatsAsListView.setItems(FXCollections.observableList(heats));
+
             }
         });
     }
