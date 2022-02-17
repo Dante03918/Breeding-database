@@ -29,7 +29,7 @@ public class Main extends Application {
 
    public boolean saveFlag = false;
 
-   private ObservableList<DogModel> dogModelObservableList = FXCollections.observableArrayList();
+   public ObservableList<DogModel> dogModelObservableList = FXCollections.observableArrayList();
 
    private Set<String> overdueRabiesVaccinationsSet = new HashSet<>();
     private Set<String> monthBeforeRabiesVaccinationExpireDateSet = new HashSet<>();

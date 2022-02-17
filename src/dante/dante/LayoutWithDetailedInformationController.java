@@ -6,6 +6,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import dante.model.DogModel;
 
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.stream.Collectors;
 
 public class LayoutWithDetailedInformationController {
@@ -21,6 +24,8 @@ public class LayoutWithDetailedInformationController {
     private Label breedLabel;
     @FXML
     private Label coatLabel;
+    @FXML
+    private Label sexLabel;
     @FXML
     private RadioButton rabiesVaccinationsButton;
     @FXML
@@ -48,83 +53,68 @@ public class LayoutWithDetailedInformationController {
     private dante.Main main;
     private DogModel selectedItem;
 
+    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
 
     @FXML
     private void initialize() {
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
 
-        dogsCollection.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<DogModel>() {
-            @Override
-            public void changed(ObservableValue<? extends DogModel> observable, DogModel oldValue, DogModel newValue) {
-                if(newValue != null){
-                    showDogDetails(newValue);
-                }
+        dogsCollection.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                showDogDetails(newValue);
+                newValue.toString();
             }
         });
-        rabiesVaccinationsButton.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                selectedItem = dogsCollection.getSelectionModel().getSelectedItem();
-                if(selectedItemValidate(selectedItem)) {
+        rabiesVaccinationsButton.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            selectedItem = dogsCollection.getSelectionModel().getSelectedItem();
+            if(selectedItemValidate(selectedItem)) {
 
-                    if (newValue) {
+                if (newValue) {
 
-                    textArea.setText(vaccinationsString);
-                }}
-            }
+                textArea.setText(vaccinationsString);
+            }}
         });
-        heatButton.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                selectedItem = dogsCollection.getSelectionModel().getSelectedItem();
-                if(selectedItemValidate(selectedItem)) {
+        heatButton.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            selectedItem = dogsCollection.getSelectionModel().getSelectedItem();
+            if(selectedItemValidate(selectedItem)) {
 
-                    if (newValue) {
-                    if(sex != null && sex.equals("pies")){
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Wskazówka");
-                        alert.setHeaderText(null);
-                        alert.setContentText("Pies jest tak skonstruowany, że nie posiada cieczki ;)");
-                        alert.showAndWait();
-                    }else {
-                       textArea.setText(modelRefference.getHeats().stream()
-                               .map(c-> c.getHeatStart() + "/-/" + c.getHeatEnd()).collect(Collectors.joining()));
-                    }
-                }}
-            }
-        });
-        littersButton.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                selectedItem = dogsCollection.getSelectionModel().getSelectedItem();
-                if(selectedItemValidate(selectedItem)) {
-
-                    if (newValue) {
-                        textArea.setText(littersString);
-                        System.out.println("Mioty");
+                if (newValue) {
+                if(sex != null && sex.equals("pies")){
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Wskazówka");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Pies jest tak skonstruowany, że nie posiada cieczki ;)");
+                    alert.showAndWait();
+                }else {
+                   textArea.setText(modelRefference.getHeats().stream()
+                           .map(c-> c.getHeatStart() + "/-/" + c.getHeatEnd()).collect(Collectors.joining()));
                 }
             }}
         });
-        surgicalProceduresButton.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                selectedItem = dogsCollection.getSelectionModel().getSelectedItem();
-                if(selectedItemValidate(selectedItem)) {
+        littersButton.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            selectedItem = dogsCollection.getSelectionModel().getSelectedItem();
+            if(selectedItemValidate(selectedItem)) {
 
-                    if (newValue) {
-                    textArea.setText(surgicalProceduresString);
-                    System.out.println("Zabiegi");                }
-            }}
-        });
-        otherVaccinations.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                selectedItem = dogsCollection.getSelectionModel().getSelectedItem();
-                if(selectedItemValidate(selectedItem)) {
+                if (newValue) {
+                    textArea.setText(littersString);
+                    System.out.println("Mioty");
+            }
+        }});
+        surgicalProceduresButton.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            selectedItem = dogsCollection.getSelectionModel().getSelectedItem();
+            if(selectedItemValidate(selectedItem)) {
 
-                    textArea.setText(otherVaccinationsString);
-            }}
-        });
+                if (newValue) {
+                textArea.setText(surgicalProceduresString);
+                System.out.println("Zabiegi");                }
+        }});
+        otherVaccinations.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            selectedItem = dogsCollection.getSelectionModel().getSelectedItem();
+            if(selectedItemValidate(selectedItem)) {
+
+                textArea.setText(otherVaccinationsString);
+        }});
     }
     public void setMain(dante.Main main) {
         this.main = main;
@@ -133,6 +123,10 @@ public class LayoutWithDetailedInformationController {
     }
 
     public void showDogDetails(DogModel dogModel) {
+
+
+
+
         if (dogModel != null) {
 
             rabiesVaccinationsButton.setSelected(false);
@@ -142,16 +136,20 @@ public class LayoutWithDetailedInformationController {
 
             textArea.setText("");
 
-//            sexLabel.setText(dogModel.getSex());
+            sexLabel.setText(dogModel.getSex().toString());
             breedLabel.setText(dogModel.getBreed());
             coatLabel.setText(dogModel.getCoat());
-//            birthdayLabel.setText(dogModel.getBirthday());
+            birthdayLabel.setText(dogModel.getBirthday().format(dateTimeFormatter));
 
-//            vaccinationsString = dogModel.getRabiesVaccinations();
+            vaccinationsString = dogModel.getRabiesVaccinations().stream()
+                    .map(date -> date.format(dateTimeFormatter))
+                    .collect(Collectors.joining());
             littersString = dogModel.getLitters();
             surgicalProceduresString = dogModel.getSurgicalProcedures();
             sex = dogModel.getSex().toString();
-//            otherVaccinationsString = dogModel.getViralVaccinations();
+            otherVaccinationsString = dogModel.getViralVaccinations().stream()
+                    .map(date -> date.format(dateTimeFormatter))
+                    .collect(Collectors.joining());
 
             modelRefference = dogModel;
         } else {
@@ -168,7 +166,6 @@ public class LayoutWithDetailedInformationController {
         DogModel dogModel = new DogModel();
         boolean clickedOk = main.showEditLayout(dogModel);
 
-//        genderChoiceBox.setItems(FXCollections.observableList(List.of("PIES", "SUKA")));
         if(clickedOk){
             main.getDogModelObservableList().add(dogModel);
         }
